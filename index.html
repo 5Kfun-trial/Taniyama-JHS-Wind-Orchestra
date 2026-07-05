@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>谷山中学校吹奏楽部第36回定期演奏会</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #007bff;
+            --white: #ffffff;
+            --yellow: #ffeb3b;
+            --text: #333;
+            --azuki: #8a2e3b;
+            --sky: #87ceeb;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { overflow-x: hidden; width: 100%; }
+
+        body {
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            color: var(--text);
+            background: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url('image/002.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* ===== 校章ヘッダー ===== */
+        .school-header { position: absolute; top: 20px; left: 20px; display: flex; align-items: center; gap: 10px; background: var(--white); padding: 10px 15px; border-radius: 8px; z-index: 10; }
+        .kousyou { width: 40px; }
+        .school-name { color: var(--azuki); font-weight: bold; font-size: 0.85rem; }
+
+        /* ===== メインヘッダー（光エフェクト） ===== */
+        header {
+            height: 100vh;
+            min-height: 560px;
+            background: url('image/001.PNG') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* 動くグラデーションの層 */
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, rgba(135,206,235,0.25), rgba(255,255,255,0.05) 40%, rgba(135,206,235,0.25));
+            background-size: 200% 200%;
+            animation: gradientFlow 10s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 光の筋が通り抜ける層 */
+        .light-sweep { position: absolute; inset: 0; overflow: hidden; z-index: 2; pointer-events: none; }
+        .light-line {
+            position: absolute;
+            top: 0;
+            left: -60%;
+            width: 22%;
+            height: 100%;
+            background: linear-gradient(115deg, transparent, rgba(255,255,255,0.55), transparent);
+            transform: skewX(-18deg);
+            animation: sweep 7s ease-in-out infinite;
+        }
+        .light-line.line2 { animation-delay: 2.3s; width: 12%; opacity: 0.6; }
+        .light-line.line3 { animation-delay: 4.6s; width: 8%; opacity: 0.4; }
+
+        @keyframes sweep {
+            0%   { left: -60%; }
+            45%  { left: 130%; }
+            100% { left: 130%; }
+        }
+
+        .title-container {
+            z-index: 3;
+            padding: 40px 40px 20px 40px;
+            background: rgba(135, 206, 235, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.35);
+            width: 85%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            box-shadow: 0 0 40px rgba(255,255,255,0.15);
+        }
+
+        #title-text { font-size: clamp(2.3rem, 8vw, 4.5rem); color: var(--white); font-weight: 900; line-height: 1.15; text-align: center; margin-bottom: 40px; margin-top: -30px; text-shadow: 4px 4px 10px rgba(0,0,0,0.8); }
+
+        .char { display: inline-block; opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
+        .subtitle { color: var(--white); font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.5); padding-top: 15px; margin-top: auto; }
+
+        /* ===== ハンバーガーメニュー ===== */
+        .menu-btn { position: fixed; top: 20px; right: 20px; z-index: 1000; background: var(--primary); color: white; padding: 14px 18px; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; font-size: 1.1rem; }
+        .menu-btn:hover, .menu-btn:active { color: var(--yellow); transform: scale(1.1); }
+
+        nav { position: fixed; top: 0; right: -100%; width: 280px; max-width: 80%; height: 100%; background: rgba(255,255,255,0.98); transition: 0.4s; padding-top: 80px; z-index: 999; box-shadow: -2px 0 10px rgba(0,0,0,0.1); overflow-y: auto; }
+        nav.active { right: 0; }
+        nav ul { list-style: none; padding: 20px; }
+        nav a { text-decoration: none; color: var(--text); font-weight: bold; display: block; padding: 16px 15px; border-radius: 8px; transition: all 0.3s; font-size: 1rem; }
+        nav a:hover { background: #e0f0ff; color: var(--primary); }
+
+        /* ===== 共通セクション ===== */
+        section { padding: 50px 20px; max-width: 1000px; margin: auto; }
+        .section-title { font-size: clamp(1.6rem, 5vw, 2.2rem); text-align: center; margin-bottom: 30px; color: var(--azuki); }
+        .section-title i { color: var(--primary); margin-right: 8px; }
+
+        .info-box { background: rgba(255, 255, 255, 0.85); padding: clamp(24px, 6vw, 40px); border-radius: 15px; text-align: left; margin-bottom: 10px; font-size: clamp(1rem, 3.5vw, 1.3rem); }
+        .info-box h2 { font-size: clamp(1.6rem, 5vw, 2.2rem); margin-bottom: 20px; }
+        .info-box p { margin-bottom: 6px; }
+
+        .info-links { margin-top: 25px; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+        .info-links a { background: var(--primary); color: var(--white); padding: 14px 24px; border-radius: 30px; text-decoration: none; font-weight: bold; display: inline-block; transition: all 0.3s ease; min-width: 44px; text-align: center; }
+        .info-links a:hover, .info-links a:active { color: var(--yellow); transform: scale(1.1); }
+
+        /* ===== プログラム ===== */
+        .program-list { background: rgba(255,255,255,0.85); border-radius: 15px; padding: clamp(20px, 5vw, 35px); }
+        .program-item { display: flex; align-items: center; gap: 15px; padding: 16px 0; border-bottom: 1px dashed rgba(138,46,59,0.3); }
+        .program-item:last-child { border-bottom: none; }
+        .program-num { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .program-text { font-size: clamp(0.95rem, 3.5vw, 1.15rem); }
+        .program-text .piece { font-weight: bold; color: var(--azuki); }
+        .program-text .composer { font-size: 0.85em; color: #666; }
+
+        /* ===== 部員紹介 ===== */
+        .member-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+        @media (min-width: 700px) { .member-grid { grid-template-columns: repeat(3, 1fr); } }
+        .member-card { background: rgba(255,255,255,0.88); border-radius: 14px; padding: 18px 14px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+        .member-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 3px solid var(--sky); }
+        .member-card .m-name { font-weight: bold; font-size: 1rem; color: var(--azuki); }
+        .member-card .m-part { font-size: 0.85rem; color: var(--primary); margin-bottom: 6px; }
+        .member-card .m-comment { font-size: 0.8rem; color: #555; }
+
+        /* ===== 顧問挨拶 ===== */
+        .greeting-box { background: rgba(255,255,255,0.88); border-radius: 15px; padding: clamp(24px, 6vw, 40px); position: relative; }
+        .greeting-box::before { content: '\201C'; font-size: 5rem; color: var(--sky); position: absolute; top: -10px; left: 15px; opacity: 0.5; font-family: Georgia, serif; }
+        .greeting-text { font-size: clamp(0.95rem, 3.8vw, 1.1rem); white-space: pre-line; margin-top: 10px; }
+        .greeting-name { text-align: right; margin-top: 20px; font-weight: bold; color: var(--azuki); }
+
+        /* ===== ギャラリー ===== */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding-bottom: 80px; }
+        @media (min-width: 768px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+        .grid img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid white; transition: 0.3s; }
+        .grid img:hover { transform: scale(1.05); }
+
+        #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+        #lightbox-container { position: relative; display: flex; flex-direction: column; align-items: center; max-width: 100%; max-height: 100%; }
+        .lb-image-wrap { width: 90vw; max-width: 700px; height: 55vh; max-height: 560px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; z-index: 1; }
+        #lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; border: 3px solid white; border-radius: 5px; transition: transform 0.4s ease; }
+        .lb-caption { color: white; margin-top: 20px; text-align: center; line-height: 1.5; font-size: 1.1rem; font-weight: bold; position: relative; z-index: 10; }
+
+        /* ===== ライトボックス：画像操作ツールバー（画像より必ず手前・大きめタップ領域） ===== */
+        .lb-toolbar { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 20px; position: relative; z-index: 10; }
+        .lb-tool-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; cursor: pointer; transition: all 0.3s ease; }
+        .lb-tool-btn:hover, .lb-tool-btn:active { color: var(--yellow); transform: scale(1.15); }
+
+        /* ===== 閉じるボタン（下に大きく・目立つ配置） ===== */
+        .lb-close-btn { position: relative; z-index: 10; margin-top: 24px; background: var(--azuki); color: white; padding: 16px 36px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.3s ease; }
+        .lb-close-btn i { font-size: 1.3rem; }
+        .lb-close-btn:hover, .lb-close-btn:active { color: var(--yellow); transform: scale(1.1); }
+
+        #to-top { position: fixed; bottom: 20px; right: 20px; background: var(--primary); width: 50px; height: 50px; border-radius: 50%; color: white; display: none; align-items: center; justify-content: center; z-index: 900; cursor: pointer; transition: all 0.3s ease; }
+        #to-top:hover, #to-top:active { color: var(--yellow); transform: scale(1.1); }
+
+        /* ===== スクロール出現アニメーション ===== */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.show { opacity: 1; transform: translateY(0); }
+
+        /* ===== 見出し：上からふわっと出現するアニメーション ===== */
+        .heading-reveal { opacity: 0; transform: translateY(-30px); transition: opacity 0.9s ease, transform 0.9s ease; }
+        .heading-reveal.show { opacity: 1; transform: translateY(0); }
+
+        /* ===== 見出し：今風デザイン（日本語＋小さな英語表記） ===== */
+        .heading-modern { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .heading-modern .heading-jp { font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: 700; letter-spacing: 0.06em; color: var(--azuki); }
+        .heading-modern .heading-jp i { color: var(--primary); margin-right: 8px; font-size: 0.85em; }
+        .heading-modern .heading-en { font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--primary); font-weight: 600; }
+
+        /* プログラム見出し専用：明朝体＋「プ」の文字だけあずき色 */
+        .heading-program .heading-jp { font-family: "Hiragino Mincho ProN", "Yu Mincho", "MS Mincho", serif; font-weight: 700; letter-spacing: 0.14em; color: var(--text); }
+        .heading-program .heading-jp .accent-char { color: var(--azuki); }
+
+        /* ===== フッター（個人情報保護・転用禁止） ===== */
+        .site-footer { text-align: center; padding: 30px 20px 60px; background: rgba(255,255,255,0.6); color: var(--text); font-size: 0.85rem; }
+        .site-footer p { margin: 4px 0; }
+        .site-footer .footer-notice { font-weight: bold; color: var(--azuki); }
+
+        /* ===== スマホ最適化（横スクロール防止・余白調整） ===== */
+        @media (max-width: 480px) {
+            section { padding: 35px 16px; }
+            .info-box, .program-list, .greeting-box, .member-card { padding: 20px 16px; }
+            .info-links { flex-direction: column; align-items: stretch; }
+            .info-links a { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="school-header">
+        <img src="image/KOUSYOU.png" alt="校章" class="kousyou">
+        <div class="school-name">鹿児島市立谷山中学校</div>
+    </div>
+
+    <header id="top">
+        <div class="light-sweep">
+            <div class="light-line line1"></div>
+            <div class="light-line line2"></div>
+            <div class="light-line line3"></div>
+        </div>
+        <div class="title-container">
+            <h1 id="title-text"></h1>
+            <div class="subtitle">The 36th Annual Concert of Taniyama JHS Wind Orchestra</div>
+        </div>
+    </header>
+
+    <div class="menu-btn" id="menu-toggle"><i class="fas fa-bars"></i></div>
+    <nav id="nav-menu">
+        <ul>
+            <li><a href="#info">定期演奏会の情報</a></li>
+            <li><a href="#program">プログラム</a></li>
+            <li><a href="#members">部員紹介</a></li>
+            <li><a href="#greeting">顧問挨拶</a></li>
+            <li><a href="#gallery">写真ギャラリー</a></li>
+            <li><a href="#g1">写真1-9</a></li>
+            <li><a href="#g10">写真10-19</a></li>
+            <li><a href="#g20">写真20-29</a></li>
+            <li><a href="#g30">写真30-39</a></li>
+            <li><a href="#g40">写真40-49</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== 表紙情報 ===== -->
+    <section id="info">
+        <div class="info-box reveal">
+            <h2><i class="fas fa-music"></i> 定期演奏会情報</h2>
+            <p>日時：2026年9月23日 1:30 PM – 3:30 PM</p>
+            <p>場所：谷山サザンホール</p>
+            <p>住所：鹿児島県鹿児島市谷山中央１丁目５８−４３６０</p>
+            <p>電話：099-268-3165 / 入場料：無料</p>
+            <div class="info-links">
+                <a href="https://maps.app.goo.gl/M8BeMWccULv73Fse7" target="_blank">Google MAP</a>
+                <a href="https://k-kb.or.jp/southern/" target="_blank">ホール公式HP</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== プログラム ===== -->
+    <section id="program">
+        <h2 class="section-title heading-modern heading-program heading-reveal">
+            <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">プ</span>ログラム</span>
+            <span class="heading-en">program</span>
+        </h2>
+        <div class="program-list reveal">
+            <!-- ここにプログラム一覧データを挿入（下は表示イメージのサンプルです） -->
+            <div class="program-item">
+                <div class="program-num">1</div>
+                <div class="program-text"><span class="piece">第1部：クラシックステージ<br>（13:30 ～ 14:05）</span><br><span class="composer">1. 行進曲「谷山の風」
+                <br>2. 吹奏楽のための序曲「青空と希望」<br>3. 組曲「四季」より 第1楽章「春」</span></div>
+            </div>
+            <div class="program-item">
+                <div class="program-num">2</div>
+                <div class="program-text"><span class="piece">第2部：ポップス＆ステージ<br>（14:15 ～ 14:45）</span><br><span class="composer">4. ジブリ・メドレー ～風の通り道～
+                <br>5. J-POPセレクション「青春グラフィティ」<br>6. アニメソング・スペシャルメドレー
+</span></div>
+            </div>
+            <div class="program-item">
+                <div class="program-num">3</div>
+                <div class="program-text"><span class="piece">第3部：フィナーレステージ<br>（14:45 ～ 15:30）</span><br><span class="composer">7. 谷山中学校 校歌 ～吹奏楽アレンジ～
+                <br>8. エンディング「ありがとうのハーモニー」
+                <br>9. 部員退場・顧問挨拶</span></div>
+            </div>
+            <!-- 追加したい分だけ program-item をここに複製してください -->
+        </div>
+    </section>
+
+    <!-- ===== 部員紹介 ===== -->
+  <section id="program">
+        <h2 class="section-title heading-modern heading-program heading-reveal">
+            <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">部</span>員紹介</span>
+            <span class="heading-en">program</span>
+        </h2>
+        <div class="member-grid reveal">
+            <!-- 部員紹介データをここに展開（下は表示イメージのサンプルです） -->
+            <div class="member-card">
+                <img src="image/member01.png" alt="部員写真">
+                <div class="m-name">氏名：可愛　可愛子</div>
+                <div class="m-part">担当パート：ハーブ</div>
+                <div class="m-comment">ひとことコメント：うんこブリブリ</div>
+            </div>
+            <div class="member-card">
+                <img src="image/member02.png" alt="部員写真">
+                <div class="m-name">氏名：池麺　つけ麺</div>
+                <div class="m-part">担当パート：コルネット</div>
+                <div class="m-comment">ひとことコメント：ラーメン麺、つけ麺、ぼくイケメン</div>
+            </div>
+            <!-- 追加したい分だけ member-card をここに複製してください -->
+        </div>
+    </section>
+
+    <!-- ===== 顧問挨拶 ===== -->
+  <section id="program">
+        <h2 class="section-title heading-modern heading-program heading-reveal">
+            <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">顧</span>問挨拶</span>
+            <span class="heading-en">program</span>
+        </h2>
+        <div class="greeting-box reveal">
+            <!-- ここに顧問挨拶文を挿入 -->
+            <p class="greeting-text">ここに顧問の先生からの挨拶文を挿入してください。
+生徒たちの一年間の頑張りや、演奏会にかける思いなどを記載する想定です。</p>
+            <div class="greeting-name">顧問　氏名サンプル</div>
+        </div>
+    </section>
+
+    <!-- ===== 写真ギャラリー ===== -->
+    <section id="gallery">
+  <section id="program">
+        <h2 class="section-title heading-modern heading-program heading-reveal">
+            <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">写</span>真ギャラリー</span>
+            <span class="heading-en">program</span>
+        </h2>
+        <div class="grid" id="grid"></div>
+    </section>
+
+    <footer class="site-footer">
+        <p>個人情報保護&copy;</p>
+        <p class="footer-notice">※転用禁止</p>
+    </footer>
+
+    <div id="lightbox">
+        <div id="lightbox-container">
+            <div class="lb-toolbar" id="lb-toolbar">
+                <div class="lb-tool-btn" id="lb-zoom-in" title="拡大"><i class="fas fa-search-plus"></i></div>
+                <div class="lb-tool-btn" id="lb-zoom-out" title="縮小"><i class="fas fa-search-minus"></i></div>
+                <div class="lb-tool-btn" id="lb-rotate-left" title="左回転"><i class="fas fa-rotate-left"></i></div>
+                <div class="lb-tool-btn" id="lb-rotate-right" title="右回転"><i class="fas fa-rotate-right"></i></div>
+                <div class="lb-tool-btn" id="lb-reset" title="リセット"><i class="fas fa-sync-alt"></i></div>
+            </div>
+            <div class="lb-image-wrap">
+                <img id="lightbox-img" src="">
+            </div>
+            <div class="lb-caption" id="lb-caption"></div>
+            <div class="lb-close-btn" id="close-btn" title="閉じる"><i class="fas fa-times"></i>閉じる</div>
+        </div>
+    </div>
+
+    <div id="to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})"><i class="fas fa-arrow-up"></i></div>
+
+    <script>
+        // 【個別コメント設定】ここに写真のファイル名とコメントを追加してください
+        const photoComments = {
+            "ph001.jpg": "開演前の様子",
+            "ph002.jpg": "第1部の演奏",
+            // 追加したい分だけここに記述: "ph003.jpg": "コメント内容",
+        };
+
+        // ===== ハンバーガーメニュー =====
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+            });
+        });
+
+        // ===== タイトル文字アニメーション =====
+        const titleEl = document.getElementById('title-text');
+        const lines = ["谷山中学校", "吹奏楽部", "第36回", "定期演奏会"];
+        lines.forEach((line, lineIdx) => {
+            const div = document.createElement('div');
+            line.split('').forEach((char, i) => {
+                const span = document.createElement('span');
+                span.textContent = char;
+                span.className = 'char';
+                span.style.transitionDelay = (lineIdx * 0.1 + i * 0.05) + 's';
+                div.appendChild(span);
+            });
+            titleEl.appendChild(div);
+        });
+        setTimeout(() => document.querySelectorAll('.char').forEach(el => el.style.opacity = 1), 200);
+
+        // ===== 写真ギャラリー自動生成 =====
+        const grid = document.getElementById('grid');
+        for (let i = 1; i <= 50; i++) {
+            const fileName = `ph${i.toString().padStart(3, '0')}.jpg`;
+            const img = document.createElement('img');
+            img.src = `image/${fileName}`;
+            img.dataset.filename = fileName; // ファイル名を保持
+            if(i === 1) img.id = "g1";
+            if(i === 10) img.id = "g10";
+            if(i === 20) img.id = "g20";
+            if(i === 30) img.id = "g30";
+            if(i === 40) img.id = "g40";
+            img.onerror = function() { this.style.display = 'none'; };
+            grid.appendChild(img);
+        }
+
+        // ===== ライトボックス =====
+        const lightbox = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lightbox-img');
+        const lbCaption = document.getElementById('lb-caption');
+        const closeBtn = document.getElementById('close-btn');
+
+        // ▼ 画像操作（拡大・縮小・回転）の状態を一元管理（ドラッグ移動は行わない）
+        let lbState = { scale: 1, rotate: 0 };
+
+        function applyLbTransform() {
+            lbImg.style.transform = `scale(${lbState.scale}) rotate(${lbState.rotate}deg)`;
+        }
+
+        grid.addEventListener('click', (e) => {
+            if (e.target.tagName === 'IMG') {
+                lbImg.src = e.target.src;
+                // コメントの設定（未設定の場合は※未設定と表示）
+                lbCaption.textContent = photoComments[e.target.dataset.filename] || "※未設定";
+                lightbox.style.display = 'flex';
+                // 画像を開くたびに操作状態をリセット
+                lbState = { scale: 1, rotate: 0 };
+                handleRotation();
+            }
+        });
+
+        function handleRotation() {
+            lbImg.onload = function() {
+                const imgRatio = lbImg.naturalWidth / lbImg.naturalHeight;
+                if (window.innerHeight > window.innerWidth && imgRatio > 1.2) {
+                    lbState.rotate = 90;
+                } else {
+                    lbState.rotate = 0;
+                }
+                applyLbTransform();
+            };
+        }
+
+        closeBtn.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+        // ▼ 拡大・縮小・回転・リセット ボタン
+        const lbZoomInBtn = document.getElementById('lb-zoom-in');
+        const lbZoomOutBtn = document.getElementById('lb-zoom-out');
+        const lbRotateLeftBtn = document.getElementById('lb-rotate-left');
+        const lbRotateRightBtn = document.getElementById('lb-rotate-right');
+        const lbResetBtn = document.getElementById('lb-reset');
+
+        lbZoomInBtn.addEventListener('click', () => {
+            lbState.scale = Math.min(lbState.scale + 0.25, 4);
+            applyLbTransform();
+        });
+
+        lbZoomOutBtn.addEventListener('click', () => {
+            lbState.scale = Math.max(lbState.scale - 0.25, 0.5);
+            applyLbTransform();
+        });
+
+        lbRotateLeftBtn.addEventListener('click', () => {
+            lbState.rotate -= 90;
+            applyLbTransform();
+        });
+
+        lbRotateRightBtn.addEventListener('click', () => {
+            lbState.rotate += 90;
+            applyLbTransform();
+        });
+
+        lbResetBtn.addEventListener('click', () => {
+            lbState.scale = 1;
+            handleRotation(); // 画像を開いた時点の向き（縦横自動回転）に戻す
+            applyLbTransform();
+        });
+
+        // ===== トップへ戻るボタン =====
+        window.addEventListener('scroll', () => {
+            const toTop = document.getElementById('to-top');
+            toTop.style.display = window.scrollY > 300 ? 'flex' : 'none';
+        });
+
+        // ===== スクロール出現アニメーション（軽量IntersectionObserver） =====
+        const revealEls = document.querySelectorAll('.reveal, .heading-reveal');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        revealEls.forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
