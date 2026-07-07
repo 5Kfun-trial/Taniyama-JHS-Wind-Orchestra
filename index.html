@@ -21,7 +21,7 @@
             font-family: "Helvetica Neue", Arial, sans-serif;
             line-height: 1.7;
             color: var(--text);
-            background: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url('image/002.png') no-repeat center center fixed;
+            background: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url('002.png') no-repeat center center fixed;
             background-size: cover;
         }
 
@@ -34,7 +34,7 @@
         header {
             height: 100vh;
             min-height: 560px;
-            background: url('image/001.PNG') center/cover no-repeat;
+            background: url('001.PNG') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -215,7 +215,7 @@
 <body>
 
     <div class="school-header">
-        <img src="image/KOUSYOU.png" alt="校章" class="kousyou">
+        <img src="KOUSYOU.png" alt="校章" class="kousyou">
         <div class="school-name">鹿児島市立谷山中学校</div>
     </div>
 
@@ -300,13 +300,13 @@
         <div class="member-grid reveal">
             <!-- 部員紹介データをここに展開（下は表示イメージのサンプルです） -->
             <div class="member-card">
-                <img src="image/member01.png" alt="部員写真">
+                <img src="member01.png" alt="部員写真">
                 <div class="m-name">氏名：可愛　可愛子</div>
                 <div class="m-part">担当パート：ハーブ</div>
                 <div class="m-comment">ひとことコメント：うんこブリブリ</div>
             </div>
             <div class="member-card">
-                <img src="image/member02.png" alt="部員写真">
+                <img src="member02.png" alt="部員写真">
                 <div class="m-name">氏名：池麺　つけ麺</div>
                 <div class="m-part">担当パート：コルネット</div>
                 <div class="m-comment">ひとことコメント：ラーメン麺、つけ麺、ぼくイケメン</div>
@@ -412,7 +412,7 @@
         for (let i = 1; i <= 50; i++) {
             const fileName = `ph${i.toString().padStart(3, '0')}.jpg`;
             const img = document.createElement('img');
-            img.src = `image/${fileName}`;
+            img.src = `${fileName}`;
             img.dataset.filename = fileName; // ファイル名を保持
             if(i === 1) img.id = "g1";
             if(i === 10) img.id = "g10";
