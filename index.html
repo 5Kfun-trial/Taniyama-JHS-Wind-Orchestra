@@ -158,8 +158,14 @@
         #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
         #lightbox-container { position: relative; display: flex; flex-direction: column; align-items: center; max-width: 100%; max-height: 100%; }
         .lb-image-wrap { width: 90vw; max-width: 700px; height: 55vh; max-height: 560px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; z-index: 1; }
-        #lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; border: 3px solid white; border-radius: 5px; transition: transform 0.4s ease; }
+        #lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; border: 3px solid white; border-radius: 5px; transition: transform 0.4s ease; image-orientation: none; }
         .lb-caption { color: white; margin-top: 20px; text-align: center; line-height: 1.5; font-size: 1.1rem; font-weight: bold; position: relative; z-index: 10; }
+
+        /* ===== ライトボックス：前後の写真へ移動する矢印（画像の下・コメントの直上） ===== */
+        .lb-nav { width: 90vw; max-width: 700px; margin-top: 18px; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 10; }
+        .lb-nav-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease; user-select: none; }
+        .lb-nav-btn:hover, .lb-nav-btn:active { color: var(--yellow); transform: scale(1.15); }
+        .lb-nav-btn.disabled { opacity: 0.3; pointer-events: none; }
 
         /* ===== ライトボックス：画像操作ツールバー（画像より必ず手前・大きめタップ領域） ===== */
         .lb-toolbar { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 20px; position: relative; z-index: 10; }
@@ -350,6 +356,10 @@
             <div class="lb-image-wrap">
                 <img id="lightbox-img" src="">
             </div>
+            <div class="lb-nav" id="lb-nav">
+                <div class="lb-nav-btn" id="lb-prev" title="前の写真">&laquo;</div>
+                <div class="lb-nav-btn" id="lb-next" title="次の写真">&raquo;</div>
+            </div>
             <div class="lb-caption" id="lb-caption"></div>
             <div class="lb-close-btn" id="close-btn" title="閉じる"><i class="fas fa-times"></i>閉じる</div>
         </div>
@@ -412,6 +422,8 @@
             img.onerror = function() { this.style.display = 'none'; };
             grid.appendChild(img);
         }
+        // ライトボックスの前後移動用に、ギャラリー内の画像一覧を並び順のまま保持
+        const galleryImages = Array.from(grid.children);
 
         // ===== ライトボックス =====
         const lightbox = document.getElementById('lightbox');
@@ -419,39 +431,91 @@
         const lbCaption = document.getElementById('lb-caption');
         const closeBtn = document.getElementById('close-btn');
 
-        // ▼ 画像操作（拡大・縮小・回転）の状態を一元管理（ドラッグ移動は行わない）
-        let lbState = { scale: 1, rotate: 0 };
+        // ▼ 画像操作（拡大・縮小・回転・ドラッグ移動）の状態を一元管理
+        let lbState = { scale: 1, rotate: 0, offsetX: 0, offsetY: 0 };
 
         function applyLbTransform() {
-            lbImg.style.transform = `scale(${lbState.scale}) rotate(${lbState.rotate}deg)`;
+            // 90度・270度回転時は、回転後の見た目サイズが表示枠に収まる（画面いっぱいにフィットする）よう
+            // 追加の倍率を自動計算する（ユーザーによる拡大・縮小操作とは独立して加算）
+            const rotateNorm = ((lbState.rotate % 360) + 360) % 360;
+            const isSideways = (rotateNorm === 90 || rotateNorm === 270);
+            let fitScale = 1;
+            if (isSideways && lbImg.naturalWidth && lbImg.naturalHeight) {
+                const wrap = lbImg.parentElement;
+                const wrapW = wrap.clientWidth;
+                const wrapH = wrap.clientHeight;
+                const baseScale = Math.min(wrapW / lbImg.naturalWidth, wrapH / lbImg.naturalHeight);
+                const baseW = lbImg.naturalWidth * baseScale;
+                const baseH = lbImg.naturalHeight * baseScale;
+                if (baseW > 0 && baseH > 0) {
+                    fitScale = Math.min(wrapW / baseH, wrapH / baseW);
+                }
+            }
+            lbImg.style.transform = `translate(${lbState.offsetX}px, ${lbState.offsetY}px) scale(${lbState.scale * fitScale}) rotate(${lbState.rotate}deg)`;
+        }
+
+        // 現在表示中の写真のインデックス（galleryImages内の位置）
+        let currentIndex = -1;
+
+        function lockBackgroundScroll() {
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function unlockBackgroundScroll() {
+            document.documentElement.style.overflow = '';
+            document.body.style.overflow = '';
+        }
+
+        // 指定インデックスの写真を拡大表示する（存在しない・読み込み失敗した写真は対象外）
+        function openLightboxAt(index) {
+            const targetImg = galleryImages[index];
+            if (!targetImg || targetImg.style.display === 'none') return;
+            currentIndex = index;
+            lbImg.src = targetImg.src;
+            // コメントの設定（未設定の場合は※未設定と表示）
+            lbCaption.textContent = photoComments[targetImg.dataset.filename] || "※未設定";
+            lightbox.style.display = 'flex';
+            // 画像を開くたびに操作状態をリセット
+            lbState = { scale: 1, rotate: 0, offsetX: 0, offsetY: 0 };
+            handleRotation();
+            updateNavButtons();
+        }
+
+        // 現在位置から前(-1)または後(1)方向に、実在する（読み込みに成功した）最も近い写真のインデックスを探す
+        function findAdjacentIndex(fromIndex, direction) {
+            let idx = fromIndex + direction;
+            while (idx >= 0 && idx < galleryImages.length) {
+                if (galleryImages[idx].style.display !== 'none') return idx;
+                idx += direction;
+            }
+            return -1;
+        }
+
+        function updateNavButtons() {
+            const prevIdx = findAdjacentIndex(currentIndex, -1);
+            const nextIdx = findAdjacentIndex(currentIndex, 1);
+            lbPrevBtn.classList.toggle('disabled', prevIdx === -1);
+            lbNextBtn.classList.toggle('disabled', nextIdx === -1);
         }
 
         grid.addEventListener('click', (e) => {
             if (e.target.tagName === 'IMG') {
-                lbImg.src = e.target.src;
-                // コメントの設定（未設定の場合は※未設定と表示）
-                lbCaption.textContent = photoComments[e.target.dataset.filename] || "※未設定";
-                lightbox.style.display = 'flex';
-                // 画像を開くたびに操作状態をリセット
-                lbState = { scale: 1, rotate: 0 };
-                handleRotation();
+                lockBackgroundScroll();
+                openLightboxAt(galleryImages.indexOf(e.target));
             }
         });
 
         function handleRotation() {
+            // 初期表示では自動回転を行わず、常に元の向き（rotate: 0）のまま表示する
             lbImg.onload = function() {
-                const imgRatio = lbImg.naturalWidth / lbImg.naturalHeight;
-                if (window.innerHeight > window.innerWidth && imgRatio > 1.2) {
-                    lbState.rotate = 90;
-                } else {
-                    lbState.rotate = 0;
-                }
                 applyLbTransform();
             };
         }
 
         closeBtn.addEventListener('click', () => {
             lightbox.style.display = 'none';
+            unlockBackgroundScroll();
         });
 
         // ▼ 拡大・縮小・回転・リセット ボタン
@@ -460,6 +524,20 @@
         const lbRotateLeftBtn = document.getElementById('lb-rotate-left');
         const lbRotateRightBtn = document.getElementById('lb-rotate-right');
         const lbResetBtn = document.getElementById('lb-reset');
+
+        // ▼ 前後の写真へ移動するボタン（必ず隣接する写真にのみ移動、ランダム移動はしない）
+        const lbPrevBtn = document.getElementById('lb-prev');
+        const lbNextBtn = document.getElementById('lb-next');
+
+        lbPrevBtn.addEventListener('click', () => {
+            const idx = findAdjacentIndex(currentIndex, -1);
+            if (idx !== -1) openLightboxAt(idx);
+        });
+
+        lbNextBtn.addEventListener('click', () => {
+            const idx = findAdjacentIndex(currentIndex, 1);
+            if (idx !== -1) openLightboxAt(idx);
+        });
 
         lbZoomInBtn.addEventListener('click', () => {
             lbState.scale = Math.min(lbState.scale + 0.25, 4);
@@ -483,9 +561,49 @@
 
         lbResetBtn.addEventListener('click', () => {
             lbState.scale = 1;
-            handleRotation(); // 画像を開いた時点の向き（縦横自動回転）に戻す
+            lbState.rotate = 0; // 初期表示と同じく元の向き（0度）に戻す
+            lbState.offsetX = 0;
+            lbState.offsetY = 0;
             applyLbTransform();
         });
+
+        // ▼ ドラッグ（パン）操作：マウス・タッチの両方に対応
+        let isDragging = false;
+        let dragStartX = 0, dragStartY = 0;
+        let dragStartOffsetX = 0, dragStartOffsetY = 0;
+
+        lbImg.style.cursor = 'grab';
+        lbImg.style.touchAction = 'none';
+
+        lbImg.addEventListener('pointerdown', (e) => {
+            isDragging = true;
+            dragStartX = e.clientX;
+            dragStartY = e.clientY;
+            dragStartOffsetX = lbState.offsetX;
+            dragStartOffsetY = lbState.offsetY;
+            lbImg.setPointerCapture(e.pointerId);
+            lbImg.style.cursor = 'grabbing';
+            lbImg.style.transition = 'none';
+            e.preventDefault();
+        });
+
+        lbImg.addEventListener('pointermove', (e) => {
+            if (!isDragging) return;
+            lbState.offsetX = dragStartOffsetX + (e.clientX - dragStartX);
+            lbState.offsetY = dragStartOffsetY + (e.clientY - dragStartY);
+            applyLbTransform();
+        });
+
+        function endLbDrag(e) {
+            if (!isDragging) return;
+            isDragging = false;
+            lbImg.style.cursor = 'grab';
+            lbImg.style.transition = '';
+        }
+
+        lbImg.addEventListener('pointerup', endLbDrag);
+        lbImg.addEventListener('pointercancel', endLbDrag);
+        lbImg.addEventListener('pointerleave', endLbDrag);
 
         // ===== トップへ戻るボタン =====
         window.addEventListener('scroll', () => {
