@@ -102,6 +102,26 @@
         .char { display: inline-block; opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
         .subtitle { color: var(--white); font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.5); padding-top: 15px; margin-top: auto; }
 
+        /* ===== スクロール誘導矢印 ===== */
+        .scroll-down {
+            margin-top: 22px;
+            display: flex;
+            justify-content: center;
+        }
+        .scroll-down .chevron {
+            display: inline-block;
+            font-size: 3.6rem;
+            margin-left: 20px;
+            color: var(--white);
+            transform: rotate(90deg);
+            text-shadow: 0 0 10px rgba(255,255,255,0.8), 2px 2px 6px rgba(0,0,0,0.6);
+            animation: scrollBlink 1.6s ease-in-out infinite;
+        }
+        @keyframes scrollBlink {
+            0%, 100% { opacity: 0.25; transform: translateY(0) rotate(90deg); }
+            50% { opacity: 1; transform: translateY(6px) rotate(90deg); }
+        }
+
         /* ===== ハンバーガーメニュー ===== */
         .menu-btn { position: fixed; top: 20px; right: 20px; z-index: 1000; background: var(--primary); color: white; padding: 14px 18px; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; font-size: 1.1rem; }
         .menu-btn:hover, .menu-btn:active { color: var(--yellow); transform: scale(1.1); }
@@ -228,6 +248,7 @@
         <div class="title-container">
             <h1 id="title-text"></h1>
             <div class="subtitle">The 36th Annual Concert of Taniyama JHS Wind Orchestra</div>
+            <div class="scroll-down"><span class="chevron">&raquo;</span></div>
         </div>
     </header>
 
