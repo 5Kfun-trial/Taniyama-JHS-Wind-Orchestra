@@ -21,8 +21,28 @@
             font-family: "Helvetica Neue", Arial, sans-serif;
             line-height: 1.7;
             color: var(--text);
-            background: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url('002.png') no-repeat center center fixed;
+            background: url('002.png') no-repeat center center fixed;
             background-size: cover;
+            position: relative;
+        }
+
+        /* 背景の白色ぼかしの代わりに、003.png を透明度60%で重ねる層（PC・スマホどちらでも画面全体に100%フィット） */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('003.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            opacity: 0.6;
+            z-index: -1;
+            pointer-events: none;
         }
 
         /* ===== 校章ヘッダー ===== */
@@ -83,6 +103,7 @@
         }
 
         .title-container {
+            position: relative;
             z-index: 3;
             padding: 40px 40px 20px 40px;
             background: rgba(135, 206, 235, 0.4);
@@ -95,6 +116,21 @@
             flex-direction: column;
             justify-content: flex-start;
             box-shadow: 0 0 40px rgba(255,255,255,0.15);
+            overflow: hidden;
+        }
+
+        /* タイトル部分の背景（青色の透かし）に003.pngを透明度60%で挿入 */
+        .title-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('003.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            opacity: 0.6;
+            z-index: -1;
+            pointer-events: none;
         }
 
         #title-text { font-size: clamp(2.3rem, 8vw, 4.5rem); color: var(--white); font-weight: 900; line-height: 1.15; text-align: center; margin-bottom: 40px; margin-top: -30px; text-shadow: 4px 4px 10px rgba(0,0,0,0.8); }
@@ -113,13 +149,26 @@
             font-size: 3.6rem;
             margin-left: 20px;
             color: var(--white);
+            text-decoration: none;
+            cursor: pointer;
             transform: rotate(90deg);
             text-shadow: 0 0 10px rgba(255,255,255,0.8), 2px 2px 6px rgba(0,0,0,0.6);
-            animation: scrollBlink 1.6s ease-in-out infinite;
+            animation: scrollBlink 1.6s ease-in-out infinite, chevronRainbow 5s linear infinite;
         }
         @keyframes scrollBlink {
             0%, 100% { opacity: 0.25; transform: translateY(0) rotate(90deg); }
             50% { opacity: 1; transform: translateY(6px) rotate(90deg); }
+        }
+        /* 「»」を七色（虹色）に徐々に入れ替わるエフェクト */
+        @keyframes chevronRainbow {
+            0%    { color: #ff0000; }
+            14.3% { color: #ff9900; }
+            28.6% { color: #ffee00; }
+            42.9% { color: #33cc33; }
+            57.1% { color: #3399ff; }
+            71.4% { color: #6633cc; }
+            85.7% { color: #cc33ff; }
+            100%  { color: #ff0000; }
         }
 
         /* ===== ハンバーガーメニュー ===== */
@@ -248,7 +297,7 @@
         <div class="title-container">
             <h1 id="title-text"></h1>
             <div class="subtitle">The 36th Annual Concert of Taniyama JHS Wind Orchestra</div>
-            <div class="scroll-down"><span class="chevron">&raquo;</span></div>
+            <div class="scroll-down"><a href="#info" class="chevron" aria-label="定期演奏会情報へ移動">&raquo;</a></div>
         </div>
     </header>
 
@@ -313,10 +362,10 @@
     </section>
 
     <!-- ===== 部員紹介 ===== -->
-  <section id="program">
+  <section id="members">
         <h2 class="section-title heading-modern heading-program heading-reveal">
             <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">部</span>員紹介</span>
-            <span class="heading-en">program</span>
+            <span class="heading-en">Club Member Introduction</span>
         </h2>
         <div class="member-grid reveal">
             <!-- 部員紹介データをここに展開（下は表示イメージのサンプルです） -->
@@ -337,10 +386,10 @@
     </section>
 
     <!-- ===== 顧問挨拶 ===== -->
-  <section id="program">
+  <section id="greeting">
         <h2 class="section-title heading-modern heading-program heading-reveal">
             <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">顧</span>問挨拶</span>
-            <span class="heading-en">program</span>
+            <span class="heading-en">Advisor's Greeting</span>
         </h2>
         <div class="greeting-box reveal">
             <!-- ここに顧問挨拶文を挿入 -->
@@ -393,6 +442,26 @@
         const photoComments = {
             "ph001.jpg": "開演前の様子",
             "ph002.jpg": "第1部の演奏",
+            "ph003.jpg": "開演前の様子",
+            "ph004.jpg": "第1部の演奏",
+            "ph005.jpg": "開演前の様子",
+            "ph006.jpg": "第1部の演奏",
+            "ph007.jpg": "開演前の様子",
+            "ph008.jpg": "第1部の演奏",
+            "ph009.jpg": "開演前の様子",
+            "ph010.jpg": "第1部の演奏",
+            "ph011.jpg": "開演前の様子",
+            "ph012.jpg": "第1部の演奏",
+            "ph013.jpg": "開演前の様子",
+            "ph014.jpg": "第1部の演奏",
+            "ph015.jpg": "開演前の様子",
+            "ph016.jpg": "第1部の演奏",
+            "ph017.jpg": "開演前の様子",
+            "ph018.jpg": "第1部の演奏",
+            "ph019.jpg": "開演前の様子",
+            "ph020.jpg": "第1部の演奏",
+            "ph021.jpg": "開演前の様子",
+            "ph022.jpg": "第1部の演奏",
             // 追加したい分だけここに記述: "ph003.jpg": "コメント内容",
         };
 
