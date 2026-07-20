@@ -241,8 +241,20 @@
         .member-card .m-part { font-size: 0.85rem; color: var(--primary); margin-bottom: 6px; }
         .member-card .m-comment { font-size: 0.8rem; color: #555; }
 
+        /* ===== 顧問の紹介 ===== */
+        .advisor-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+        @media (min-width: 700px) { .advisor-grid { grid-template-columns: repeat(3, 1fr); } }
+        .advisor-card { border-radius: 14px; padding: 24px 14px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+        .advisor-card.advisor-head { background: rgba(255, 182, 193, 0.4); } /* 顧問：薄いピンク */
+        .advisor-card.advisor-sub { background: rgba(135, 206, 235, 0.3); } /* 副顧問：薄い青 */
+        .advisor-card .a-role { font-size: 0.85rem; font-weight: bold; color: var(--primary); margin-bottom: 6px; }
+        .advisor-card .a-name { font-size: 1.05rem; font-weight: bold; color: var(--azuki); }
+
         /* ===== 顧問挨拶 ===== */
         .greeting-box { background: rgba(255,255,255,0.88); border-radius: 15px; padding: clamp(24px, 6vw, 40px); position: relative; }
+        .greeting-box.advisor-head { background: rgba(255, 182, 193, 0.4); } /* 顧問：薄いピンク */
+        .greeting-box.advisor-sub { background: rgba(135, 206, 235, 0.3); } /* 副顧問：薄い青 */
+        .greeting-box + .greeting-box { margin-top: 26px; }
         .greeting-box::before { content: '\201C'; font-size: 5rem; color: var(--sky); position: absolute; top: -10px; left: 15px; opacity: 0.5; font-family: Georgia, serif; }
         .greeting-text { font-size: clamp(0.95rem, 3.8vw, 1.1rem); white-space: pre-line; margin-top: 10px; }
         .greeting-name { text-align: right; margin-top: 20px; font-weight: bold; color: var(--azuki); }
@@ -370,6 +382,7 @@
             <li><a href="#info">定期演奏会の情報</a></li>
             <li><a href="#program">プログラム</a></li>
             <li><a href="#members">部員紹介</a></li>
+            <li><a href="#advisors">顧問紹介</a></li>
             <li><a href="#greeting">顧問挨拶</a></li>
             <li><a href="#gallery">写真ギャラリー</a></li>
             <li><a href="#g1">写真1-9</a></li>
@@ -448,17 +461,75 @@
         </div>
     </section>
 
+    <!-- ===== 顧問の紹介 ===== -->
+  <section id="advisors">
+        <h2 class="section-title heading-modern heading-program heading-reveal">
+            <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">顧</span>問の紹介</span>
+            <span class="heading-en">Advisor Introduction</span>
+        </h2>
+        <div class="advisor-grid reveal">
+            <div class="advisor-card advisor-head">
+                <div class="a-role">顧問</div>
+                <div class="a-name">島崎 英子 先生</div>
+            </div>
+            <div class="advisor-card advisor-sub">
+                <div class="a-role">副顧問</div>
+                <div class="a-name">二川 加奈美 先生</div>
+            </div>
+            <div class="advisor-card advisor-sub">
+                <div class="a-role">副顧問</div>
+                <div class="a-name">宮之原 せつみ 先生</div>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== 顧問挨拶 ===== -->
   <section id="greeting">
         <h2 class="section-title heading-modern heading-program heading-reveal">
             <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">顧</span>問挨拶</span>
             <span class="heading-en">Advisor's Greeting</span>
         </h2>
-        <div class="greeting-box reveal">
+        <div class="greeting-box advisor-head reveal">
             <!-- ここに顧問挨拶文を挿入 -->
-            <p class="greeting-text">ここに顧問の先生からの挨拶文を挿入してください。
-生徒たちの一年間の頑張りや、演奏会にかける思いなどを記載する想定です。</p>
-            <div class="greeting-name">顧問　氏名サンプル</div>
+            <p class="greeting-text"><p>顧問挨拶<br>
+皆さま、本日は谷山中学校吹奏楽部の定期演奏会にお越しいただき、ありがとうございます。<br>
+顧問の島崎英子です。<br>
+<br>
+今朝、生徒から「先生、今日は指揮棒だけは絶対忘れないでね！」と念押しされました。<br>
+……そんなに心配される先生でいいのでしょうか。<br>
+でも、こうして無事に持ってきていますのでご安心ください。<br>
+<br>
+吹奏楽は、音だけでなく “仲間の優しさ” が響く世界です。<br>
+今日のステージには、練習で私を笑わせてくれた生徒たちの、まっすぐな音と、ちょっとしたお茶目さが詰まっています。<br>
+<br>
+どうぞ最後まで、温かくお楽しみください。</p>
+            <div class="greeting-name">顧問　島崎 英子</div>
+        </div>
+
+        <div class="greeting-box advisor-sub reveal">
+            <!-- ここに副顧問挨拶文を挿入 -->
+            <p class="greeting-text"><p>副顧問挨拶<br>
+副顧問の二川加奈美です。<br>
+<br>
+今日は「先生、緊張してませんか？」と生徒に聞かれ、思わず「え、あなたたちの方が心配です」と返してしまいました。<br>
+<br>
+毎日の練習で聞こえてくる音は、少しずつですが確実に重なり合って、今日のこの舞台につながっています。<br>
+<br>
+どうか温かい拍手で見守っていただけたら嬉しいです。</p>
+            <div class="greeting-name">副顧問　二川 加奈美</div>
+        </div>
+
+        <div class="greeting-box advisor-sub reveal">
+            <!-- ここに副顧問挨拶文を挿入 -->
+            <p class="greeting-text"><p>副顧問挨拶<br>
+副顧問の宮之原せつみです。<br>
+<br>
+練習中、楽器のケースの中からお菓子の袋が出てきたことは……ここだけの話にしておきます。<br>
+<br>
+そんな微笑ましい毎日を経て、生徒たちは今日という日を迎えました。<br>
+<br>
+最後まで、どうぞごゆっくりお楽しみください。</p>
+            <div class="greeting-name">副顧問　宮之原 せつみ</div>
         </div>
     </section>
 
