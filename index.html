@@ -279,9 +279,40 @@
             .info-links { flex-direction: column; align-items: stretch; }
             .info-links a { text-align: center; }
         }
+
+        /* ===== 音符の桜吹雪エフェクト（ページ全体に舞う） ===== */
+        #notes-fall-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 500;
+        }
+        .falling-note {
+            position: absolute;
+            top: -40px;
+            opacity: 0;
+            will-change: transform, opacity;
+            animation-name: noteFall;
+            animation-timing-function: ease-in-out;
+            animation-fill-mode: forwards;
+        }
+        @keyframes noteFall {
+            0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+            8%   { opacity: var(--opacity); }
+            55%  { transform: translate(var(--drift), 50vh) rotate(calc(220deg * var(--rotate-dir))); }
+            90%  { opacity: var(--opacity); }
+            100% { transform: translate(calc(var(--drift) * 1.6), 108vh) rotate(calc(400deg * var(--rotate-dir))); opacity: 0; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- ===== 音符の桜吹雪エフェクト用コンテナ（ページ全体を覆う固定レイヤー） ===== -->
+    <div id="notes-fall-container" aria-hidden="true"></div>
 
     <div class="school-header">
         <img src="KOUSYOU.png" alt="校章" class="kousyou">
@@ -465,6 +496,60 @@
             // 追加したい分だけここに記述: "ph003.jpg": "コメント内容",
         };
 
+        // ===== 音符の桜吹雪エフェクト =====
+        const notesFallContainer = document.getElementById('notes-fall-container');
+        const noteChars = ['♪', '♫', '♩', '♬', '𝅘𝅥𝅮', '♭', '♮'];
+        const noteColors = ['#ffffff', '#87ceeb', '#ffeb3b', '#ffb6d5', '#a0d8ff', '#8a2e3b'];
+        const MAX_NOTES = 14; // 画面に同時に舞う数（多すぎないように控えめに）
+        let notesPaused = false;
+        let noteSpawnTimer = null;
+
+        function spawnFallingNote() {
+            if (notesPaused) return;
+            if (notesFallContainer.childElementCount < MAX_NOTES) {
+                const note = document.createElement('span');
+                note.className = 'falling-note';
+                note.textContent = noteChars[Math.floor(Math.random() * noteChars.length)];
+
+                const size = 32 + Math.random() * 44;       // 16px〜38px
+                const startLeft = Math.random() * 70 - 15;   // -15vw〜55vw（左上寄りから登場し、右下へ抜ける）
+                const duration = 3.5 + Math.random() * 3;    // 3.5秒〜6.5秒（「ぴゅーん」と速めに流れる）
+                const drift = 70 + Math.random() * 70;       // 70vw〜140vw 右方向へ大きく流れる横移動量
+                const rotateDir = Math.random() < 0.5 ? -1 : 1;
+                const peakOpacity = 0.2 + Math.random() * 0.4; // 0.35〜1.0 でランダムな透明度
+
+                note.style.left = startLeft + 'vw';
+                note.style.fontSize = size + 'px';
+                note.style.color = noteColors[Math.floor(Math.random() * noteColors.length)];
+                note.style.textShadow = '0 0 6px rgba(0,0,0,0.25)';
+                note.style.setProperty('--drift', drift + 'vw');
+                note.style.setProperty('--rotate-dir', rotateDir);
+                note.style.setProperty('--opacity', peakOpacity);
+                note.style.animationDuration = duration + 's';
+                note.style.animationTimingFunction = 'ease-out';
+
+                note.addEventListener('animationend', () => note.remove());
+                notesFallContainer.appendChild(note);
+            }
+            scheduleNextNote();
+        }
+
+        function scheduleNextNote() {
+            const delay = 700 + Math.random() * 1100; // 次の音符が舞い始めるまでの間隔（0.7秒〜1.8秒）
+            noteSpawnTimer = setTimeout(spawnFallingNote, delay);
+        }
+        scheduleNextNote();
+
+        // 画像拡大表示（ライトボックス）が開いている間は、邪魔にならないよう音符を停止する
+        function pauseFallingNotes() {
+            notesPaused = true;
+            notesFallContainer.style.display = 'none';
+        }
+        function resumeFallingNotes() {
+            notesPaused = false;
+            notesFallContainer.style.display = 'block';
+        }
+
         // ===== ハンバーガーメニュー =====
         const menuToggle = document.getElementById('menu-toggle');
         const navMenu = document.getElementById('nav-menu');
@@ -566,6 +651,7 @@
             // コメントの設定（未設定の場合は※未設定と表示）
             lbCaption.textContent = photoComments[targetImg.dataset.filename] || "※未設定";
             lightbox.style.display = 'flex';
+            pauseFallingNotes(); // 画像拡大表示中は音符が邪魔にならないよう停止
             // 画像を開くたびに操作状態をリセット
             lbState = { scale: 1, rotate: 0, offsetX: 0, offsetY: 0 };
             handleRotation();
@@ -606,6 +692,7 @@
         closeBtn.addEventListener('click', () => {
             lightbox.style.display = 'none';
             unlockBackgroundScroll();
+            resumeFallingNotes(); // 画像拡大表示を閉じたら音符の演出を再開
         });
 
         // ▼ 拡大・縮小・回転・リセット ボタン
