@@ -242,9 +242,13 @@
         .member-card .m-comment { font-size: 0.8rem; color: #555; }
 
         /* ===== 顧問の紹介 ===== */
-        .advisor-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-        @media (min-width: 700px) { .advisor-grid { grid-template-columns: repeat(3, 1fr); } }
-        .advisor-card { border-radius: 14px; padding: 24px 14px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+        .advisor-layout { display: flex; flex-direction: column; gap: 18px; }
+        .advisor-row { display: flex; gap: 18px; }
+        .advisor-row-head { justify-content: center; }
+        .advisor-row-head .advisor-card { width: 100%; max-width: 420px; }
+        .advisor-row-sub .advisor-card { flex: 1 1 0; min-width: 0; }
+        .advisor-card { display: flex; align-items: center; gap: 14px; border-radius: 14px; padding: 18px 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); text-align: left; }
+        .advisor-card img { width: clamp(52px, 14vw, 70px); height: clamp(52px, 14vw, 70px); border-radius: 50%; object-fit: cover; border: 3px solid var(--sky); flex-shrink: 0; }
         .advisor-card.advisor-head { background: rgba(255, 182, 193, 0.4); } /* 顧問：薄いピンク */
         .advisor-card.advisor-sub { background: rgba(135, 206, 235, 0.3); } /* 副顧問：薄い青 */
         .advisor-card .a-role { font-size: 0.85rem; font-weight: bold; color: var(--primary); margin-bottom: 6px; }
@@ -467,18 +471,31 @@
             <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">顧</span>問の紹介</span>
             <span class="heading-en">Advisor Introduction</span>
         </h2>
-        <div class="advisor-grid reveal">
-            <div class="advisor-card advisor-head">
-                <div class="a-role">顧問</div>
-                <div class="a-name">島崎 英子 先生</div>
+        <div class="advisor-layout reveal">
+            <div class="advisor-row advisor-row-head">
+                <div class="advisor-card advisor-head">
+                    <img src="member03.png" alt="顧問 写真">
+                    <div class="advisor-info">
+                        <div class="a-role">顧問</div>
+                        <div class="a-name">島崎 英子 先生</div>
+                    </div>
+                </div>
             </div>
-            <div class="advisor-card advisor-sub">
-                <div class="a-role">副顧問</div>
-                <div class="a-name">二川 加奈美 先生</div>
-            </div>
-            <div class="advisor-card advisor-sub">
-                <div class="a-role">副顧問</div>
-                <div class="a-name">宮之原 せつみ 先生</div>
+            <div class="advisor-row advisor-row-sub">
+                <div class="advisor-card advisor-sub">
+                    <img src="member04.png" alt="副顧問 写真">
+                    <div class="advisor-info">
+                        <div class="a-role">副顧問</div>
+                        <div class="a-name">二川 加奈美 先生</div>
+                    </div>
+                </div>
+                <div class="advisor-card advisor-sub">
+                    <img src="member05.png" alt="副顧問 写真">
+                    <div class="advisor-info">
+                        <div class="a-role">副顧問</div>
+                        <div class="a-name">宮之原 せつみ 先生</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
