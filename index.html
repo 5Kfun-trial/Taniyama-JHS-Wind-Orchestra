@@ -234,7 +234,6 @@
 
         /* ===== 部員紹介 ===== */
         .member-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-        @media (min-width: 700px) { .member-grid { grid-template-columns: repeat(3, 1fr); } }
         .member-card { background: rgba(255,255,255,0.88); border-radius: 14px; padding: 18px 14px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
         .member-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 3px solid var(--sky); }
         .member-card .m-name { font-weight: bold; font-size: 1rem; color: var(--azuki); }
@@ -243,10 +242,8 @@
 
         /* ===== 顧問の紹介 ===== */
         .advisor-layout { display: flex; flex-direction: column; gap: 18px; }
-        .advisor-row { display: flex; gap: 18px; }
-        .advisor-row-head { justify-content: center; }
-        .advisor-row-head .advisor-card { width: 100%; max-width: 420px; }
-        .advisor-row-sub .advisor-card { flex: 1 1 0; min-width: 0; }
+        .advisor-row { display: flex; justify-content: center; }
+        .advisor-row .advisor-card { width: 100%; max-width: 420px; }
         .advisor-card { display: flex; align-items: center; gap: 14px; border-radius: 14px; padding: 18px 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); text-align: left; }
         .advisor-card img { width: clamp(52px, 14vw, 70px); height: clamp(52px, 14vw, 70px); border-radius: 50%; object-fit: cover; border: 3px solid var(--sky); flex-shrink: 0; }
         .advisor-card.advisor-head { background: rgba(255, 182, 193, 0.4); } /* 顧問：薄いピンク */
@@ -472,7 +469,7 @@
             <span class="heading-en">Advisor Introduction</span>
         </h2>
         <div class="advisor-layout reveal">
-            <div class="advisor-row advisor-row-head">
+            <div class="advisor-row">
                 <div class="advisor-card advisor-head">
                     <img src="member03.png" alt="顧問 写真">
                     <div class="advisor-info">
@@ -481,7 +478,7 @@
                     </div>
                 </div>
             </div>
-            <div class="advisor-row advisor-row-sub">
+            <div class="advisor-row">
                 <div class="advisor-card advisor-sub">
                     <img src="member04.png" alt="副顧問 写真">
                     <div class="advisor-info">
@@ -489,6 +486,8 @@
                         <div class="a-name">二川 加奈美 先生</div>
                     </div>
                 </div>
+            </div>
+            <div class="advisor-row">
                 <div class="advisor-card advisor-sub">
                     <img src="member05.png" alt="副顧問 写真">
                     <div class="advisor-info">
