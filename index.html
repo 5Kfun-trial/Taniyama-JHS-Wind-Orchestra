@@ -293,7 +293,6 @@
         }
         .falling-note {
             position: absolute;
-            top: -40px;
             opacity: 0;
             will-change: transform, opacity;
             animation-name: noteFall;
@@ -500,6 +499,7 @@
         const notesFallContainer = document.getElementById('notes-fall-container');
         const noteChars = ['♪', '♫', '♩', '♬', '𝅘𝅥𝅮', '♭', '♮'];
         const noteColors = ['#ffffff', '#87ceeb', '#ffeb3b', '#ffb6d5', '#a0d8ff', '#8a2e3b'];
+        const spawnHeights = ['-40px', '25vh', '55vh']; // 出現場所（高さの異なる3か所）
         const MAX_NOTES = 14; // 画面に同時に舞う数（多すぎないように控えめに）
         let notesPaused = false;
         let noteSpawnTimer = null;
@@ -511,13 +511,15 @@
                 note.className = 'falling-note';
                 note.textContent = noteChars[Math.floor(Math.random() * noteChars.length)];
 
-                const size = 32 + Math.random() * 44;       // 16px〜38px
+                const size = 16 + Math.random() * 22;       // 16px〜38px
                 const startLeft = Math.random() * 70 - 15;   // -15vw〜55vw（左上寄りから登場し、右下へ抜ける）
                 const duration = 3.5 + Math.random() * 3;    // 3.5秒〜6.5秒（「ぴゅーん」と速めに流れる）
                 const drift = 70 + Math.random() * 70;       // 70vw〜140vw 右方向へ大きく流れる横移動量
                 const rotateDir = Math.random() < 0.5 ? -1 : 1;
-                const peakOpacity = 0.2 + Math.random() * 0.4; // 0.35〜1.0 でランダムな透明度
+                const peakOpacity = 0.35 + Math.random() * 0.65; // 0.35〜1.0 でランダムな透明度
+                const originTop = spawnHeights[Math.floor(Math.random() * spawnHeights.length)]; // 3か所からランダムに1つだけ選択
 
+                note.style.top = originTop;
                 note.style.left = startLeft + 'vw';
                 note.style.fontSize = size + 'px';
                 note.style.color = noteColors[Math.floor(Math.random() * noteColors.length)];
