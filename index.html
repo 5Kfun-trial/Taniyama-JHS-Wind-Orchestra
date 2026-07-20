@@ -181,6 +181,35 @@
         nav a { text-decoration: none; color: var(--text); font-weight: bold; display: block; padding: 16px 15px; border-radius: 8px; transition: all 0.3s; font-size: 1rem; }
         nav a:hover { background: #e0f0ff; color: var(--primary); }
 
+        /* ===== ハンバーガーメニュー内のQRコード ===== */
+        .qr-code-box {
+            text-align: center;
+            padding: 20px 20px 15px;
+            border-bottom: 1px solid #e5e5e5;
+            margin: 0 0 5px;
+        }
+        .qr-code-img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .qr-code-img:hover { transform: scale(1.05); }
+        .qr-code-img.enlarged {
+            width: 220px;
+            height: 220px;
+            transform: none;
+        }
+        .qr-code-label {
+            font-size: 0.72rem;
+            color: var(--text);
+            margin: 6px 0 0;
+            letter-spacing: 0.05em;
+        }
+
         /* ===== 共通セクション ===== */
         section { padding: 50px 20px; max-width: 1000px; margin: auto; }
         .section-title { font-size: clamp(1.6rem, 5vw, 2.2rem); text-align: center; margin-bottom: 30px; color: var(--azuki); }
@@ -333,6 +362,10 @@
 
     <div class="menu-btn" id="menu-toggle"><i class="fas fa-bars"></i></div>
     <nav id="nav-menu">
+        <div class="qr-code-box">
+            <img src="QRコード.png" alt="QRコード" id="qr-code-img" class="qr-code-img">
+            <p class="qr-code-label">QRコード</p>
+        </div>
         <ul>
             <li><a href="#info">定期演奏会の情報</a></li>
             <li><a href="#program">プログラム</a></li>
@@ -511,12 +544,12 @@
                 note.className = 'falling-note';
                 note.textContent = noteChars[Math.floor(Math.random() * noteChars.length)];
 
-                const size = 32 + Math.random() * 44;       // 16px〜38px
+                const size = 16 + Math.random() * 22;       // 16px〜38px
                 const startLeft = Math.random() * 70 - 15;   // -15vw〜55vw（左上寄りから登場し、右下へ抜ける）
                 const duration = 3.5 + Math.random() * 3;    // 3.5秒〜6.5秒（「ぴゅーん」と速めに流れる）
                 const drift = 70 + Math.random() * 70;       // 70vw〜140vw 右方向へ大きく流れる横移動量
                 const rotateDir = Math.random() < 0.5 ? -1 : 1;
-                const peakOpacity = 0.35 + Math.random() * 0.65; // 0.35〜0.8 でランダムな透明度
+                const peakOpacity = 0.35 + Math.random() * 0.65; // 0.35〜1.0 でランダムな透明度
                 const originTop = spawnHeights[Math.floor(Math.random() * spawnHeights.length)]; // 3か所からランダムに1つだけ選択
 
                 note.style.top = originTop;
@@ -550,6 +583,14 @@
         function resumeFallingNotes() {
             notesPaused = false;
             notesFallContainer.style.display = 'block';
+        }
+
+        // ===== ハンバーガーメニュー内のQRコード拡大／縮小 =====
+        const qrCodeImg = document.getElementById('qr-code-img');
+        if (qrCodeImg) {
+            qrCodeImg.addEventListener('click', () => {
+                qrCodeImg.classList.toggle('enlarged');
+            });
         }
 
         // ===== ハンバーガーメニュー =====
