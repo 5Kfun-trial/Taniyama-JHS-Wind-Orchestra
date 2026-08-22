@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>谷山中学校吹奏楽部第36回定期演奏会</title>
+    <title>第36回 谷山中学校吹奏楽部定期演奏会</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -240,6 +240,82 @@
         .member-card .m-part { font-size: 0.85rem; color: var(--primary); margin-bottom: 6px; }
         .member-card .m-comment { font-size: 0.8rem; color: #555; }
 
+        /* ===== パート紹介（一括開閉） ===== */
+        .part-toggle-controls { display: flex; gap: 14px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .part-toggle-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: clamp(0.85rem, 3.2vw, 0.95rem);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .part-toggle-btn i { font-size: 1.15rem; }
+        .part-toggle-btn:hover, .part-toggle-btn:active { color: var(--yellow); transform: scale(1.08); }
+        .part-toggle-btn.close-btn-style { background: var(--azuki); }
+
+        .part-toggle-legend { text-align: center; font-size: 0.85rem; color: var(--azuki); font-weight: bold; margin: -6px 0 18px; }
+        .part-toggle-legend .m-star { margin-right: 3px; }
+
+        .part-list { display: flex; flex-direction: column; gap: 12px; }
+        .part-card {
+            background: rgba(255,255,255,0.88);
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .part-header {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            font-weight: bold;
+            color: var(--azuki);
+            font-size: clamp(0.95rem, 3.6vw, 1.1rem);
+        }
+        .part-header .part-name-group { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .part-icon-img {
+            width: clamp(52px, 14vw, 70px);
+            height: clamp(52px, 14vw, 70px);
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid var(--sky);
+            flex-shrink: 0;
+        }
+        .part-header .part-name { min-width: 0; }
+        .part-header .part-name .part-emoji { margin-right: 6px; }
+        .part-header .part-count { font-size: 0.75rem; font-weight: normal; color: var(--primary); background: rgba(0,123,255,0.1); padding: 3px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+        .part-body {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 10px;
+            transition: max-height 0.45s ease, padding 0.45s ease;
+        }
+        .part-body.open { max-height: 600px; padding: 0 20px 18px; }
+        .part-member {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            background: rgba(135,206,235,0.12);
+            border-radius: 20px;
+            padding: 7px 14px;
+            font-size: clamp(0.85rem, 3.2vw, 0.95rem);
+        }
+        .part-member.leader { background: rgba(138,46,59,0.1); font-weight: bold; }
+        .part-member .m-star { color: var(--azuki); }
+        .part-member .m-grade { font-size: 0.78em; color: #777; }
+        .journey-month { color: var(--primary); font-weight: bold; margin-right: 2px; }
+
         /* ===== 顧問の紹介 ===== */
         .advisor-layout { display: flex; flex-direction: column; gap: 18px; }
         .advisor-row { display: flex; justify-content: center; }
@@ -385,6 +461,8 @@
             <li><a href="#members">部員紹介</a></li>
             <li><a href="#advisors">顧問紹介</a></li>
             <li><a href="#greeting">顧問挨拶</a></li>
+            <li><a href="#parts">パート紹介</a></li>
+            <li><a href="#journey">一年の軌跡</a></li>
             <li><a href="#gallery">写真ギャラリー</a></li>
             <li><a href="#g1">写真1-9</a></li>
             <li><a href="#g10">写真10-19</a></li>
@@ -398,10 +476,10 @@
     <section id="info">
         <div class="info-box reveal">
             <h2><i class="fas fa-music"></i> 定期演奏会情報</h2>
-            <p>日時：2026年9月23日 1:30 PM – 3:30 PM</p>
-            <p>場所：谷山サザンホール</p>
-            <p>住所：鹿児島県鹿児島市谷山中央１丁目５８−４３６０</p>
-            <p>電話：099-268-3165 / 入場料：無料</p>
+            <p>日　時：2026年9月23日(水・祝)</p>
+            <p>日　時：開場 13:00　開演 13:30</p>
+            <p>入場料：無料</p>
+            <p>場　所：谷山サザンホール</p>
             <div class="info-links">
                 <a href="https://maps.app.goo.gl/M8BeMWccULv73Fse7" target="_blank">Google MAP</a>
                 <a href="https://k-kb.or.jp/southern/" target="_blank">ホール公式HP</a>
@@ -419,20 +497,19 @@
             <!-- ここにプログラム一覧データを挿入（下は表示イメージのサンプルです） -->
             <div class="program-item">
                 <div class="program-num">1</div>
-                <div class="program-text"><span class="piece">第1部：クラシックステージ<br>（13:30 ～ 14:05）</span><br><span class="composer">1. 行進曲「谷山の風」
-                <br>2. 吹奏楽のための序曲「青空と希望」<br>3. 組曲「四季」より 第1楽章「春」</span></div>
+                <div class="program-text"><span class="piece">2026年度　全日本吹奏楽コンクール<br>課題曲</span><br><span class="composer">あつまれおもちゃのマルチャ!」
+                <br>－－－<br>－－－</span></div>
             </div>
             <div class="program-item">
                 <div class="program-num">2</div>
-                <div class="program-text"><span class="piece">第2部：ポップス＆ステージ<br>（14:15 ～ 14:45）</span><br><span class="composer">4. ジブリ・メドレー ～風の通り道～
-                <br>5. J-POPセレクション「青春グラフィティ」<br>6. アニメソング・スペシャルメドレー
-</span></div>
+                <div class="program-text"><span class="piece">大いなる約束の大地<br>〜チンギス・ハーン</span><br><span class="composer">－－－
+                <br>－－－<br>－－－</span></div>
             </div>
             <div class="program-item">
                 <div class="program-num">3</div>
-                <div class="program-text"><span class="piece">第3部：フィナーレステージ<br>（14:45 ～ 15:30）</span><br><span class="composer">7. 谷山中学校 校歌 ～吹奏楽アレンジ～
-                <br>8. エンディング「ありがとうのハーモニー」
-                <br>9. 部員退場・顧問挨拶</span></div>
+                <div class="program-text"><span class="piece">かわいいだけじゃだめですか？<br>他</span><br><span class="composer">－－－
+                <br>－－－
+                <br>－－－</span></div>
             </div>
             <!-- 追加したい分だけ program-item をここに複製してください -->
         </div>
@@ -549,12 +626,212 @@
         </div>
     </section>
 
+    <!-- ===== パート紹介 ===== -->
+    <section id="parts">
+        <h2 class="section-title heading-modern heading-program heading-reveal">
+            <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">パ</span>ート紹介</span>
+            <span class="heading-en">Meet the Sections</span>
+        </h2>
+        <div class="part-toggle-controls reveal">
+            <button type="button" class="part-toggle-btn" id="parts-open-all"><i class="fas fa-circle-chevron-down"></i>開く</button>
+            <button type="button" class="part-toggle-btn close-btn-style" id="parts-close-all"><i class="fas fa-circle-chevron-up"></i>閉じる</button>
+        </div>
+        <p class="part-toggle-legend reveal"><span class="m-star">★</span>パートリーダー</p>
+        <div class="part-list reveal" id="part-list">
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <img src="fl.png" alt="フルート" class="part-icon-img" onerror="this.style.display='none'">
+                        <span class="part-name"><span class="part-emoji">🎵</span>フルート（Fl）</span>
+                    </div>
+                    <span class="part-count">3名</span>
+                </div>
+                <div class="part-body">
+                    <div class="part-member leader"><span class="m-star">★</span>渡部 咲夏<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">川畑 結愛<span class="m-grade">（2年）</span></div>
+                    <div class="part-member">北村 心絆<span class="m-grade">（1年）</span></div>
+                </div>
+            </div>
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <img src="cl.png" alt="クラリネット" class="part-icon-img" onerror="this.style.display='none'">
+                        <span class="part-name"><span class="part-emoji">🎵</span>クラリネット（Cl / Bcl）</span>
+                    </div>
+                    <span class="part-count">8名</span>
+                </div>
+                <div class="part-body">
+                    <div class="part-member leader"><span class="m-star">★</span>永野 美穂<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">川原 真保<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">中菌 真陽<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">尾曲 唯衣<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">堂園 ありや<span class="m-grade">（2年）</span></div>
+                    <div class="part-member">小野 栞夏<span class="m-grade">（2年）</span></div>
+                    <div class="part-member">横村 美波<span class="m-grade">（1年）</span></div>
+                    <div class="part-member">古市 のどか<span class="m-grade">（1年）</span></div>
+                </div>
+            </div>
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <img src="asax.png" alt="サックス" class="part-icon-img" onerror="this.style.display='none'">
+                        <span class="part-name"><span class="part-emoji">🎵</span>サックス（Asax / Tsax / Bsax）</span>
+                    </div>
+                    <span class="part-count">5名</span>
+                </div>
+                <div class="part-body">
+                    <div class="part-member leader"><span class="m-star">★</span>村岡 実音<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">窪田 結愛<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">尾寄 楓<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">切手 涼菜<span class="m-grade">（2年）</span></div>
+                    <div class="part-member">福永 心音<span class="m-grade">（1年）</span></div>
+                </div>
+            </div>
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <img src="tp.png" alt="トランペット" class="part-icon-img" onerror="this.style.display='none'">
+                        <span class="part-name"><span class="part-emoji">🎵</span>トランペット（Tp）</span>
+                    </div>
+                    <span class="part-count">6名</span>
+                </div>
+                <div class="part-body">
+                    <div class="part-member leader"><span class="m-star">★</span>戊亥 聖美<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">柳 優衣<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">鶴崎 健吾<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">愛甲 翔太<span class="m-grade">（2年）</span></div>
+                    <div class="part-member">北村 瑞紀<span class="m-grade">（2年）</span></div>
+                    <div class="part-member">竹田 絢音<span class="m-grade">（1年）</span></div>
+                </div>
+            </div>
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <img src="hr.png" alt="ホルン" class="part-icon-img" onerror="this.style.display='none'">
+                        <span class="part-name"><span class="part-emoji">🎵</span>ホルン（Hr）</span>
+                    </div>
+                    <span class="part-count">3名</span>
+                </div>
+                <div class="part-body">
+                    <div class="part-member leader"><span class="m-star">★</span>岩切 愛美<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">川井田 亜子<span class="m-grade">（1年）</span></div>
+                    <div class="part-member">清藤 優奈<span class="m-grade">（1年）</span></div>
+                </div>
+            </div>
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <img src="tb.png" alt="トロンボーン" class="part-icon-img" onerror="this.style.display='none'">
+                        <span class="part-name"><span class="part-emoji">🎵</span>トロンボーン（Tb）</span>
+                    </div>
+                    <span class="part-count">4名</span>
+                </div>
+                <div class="part-body">
+                    <div class="part-member leader"><span class="m-star">★</span>川越 大輝<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">海江田 真菜<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">浜田 結衣<span class="m-grade">（1年）</span></div>
+                    <div class="part-member">ハ日 凛央<span class="m-grade">（1年）</span></div>
+                </div>
+            </div>
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <img src="euph.png" alt="ユーフォニウム" class="part-icon-img" onerror="this.style.display='none'">
+                        <span class="part-name"><span class="part-emoji">🎵</span>ユーフォニウム（Euph）</span>
+                    </div>
+                    <span class="part-count">1名</span>
+                </div>
+                <div class="part-body">
+                    <div class="part-member leader"><span class="m-star">★</span>日高 瑠南<span class="m-grade">（2年）</span></div>
+                </div>
+            </div>
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <img src="tub.png" alt="チューバ" class="part-icon-img" onerror="this.style.display='none'">
+                        <span class="part-name"><span class="part-emoji">🎵</span>チューバ（Tub）</span>
+                    </div>
+                    <span class="part-count">3名</span>
+                </div>
+                <div class="part-body">
+                    <div class="part-member leader"><span class="m-star">★</span>竹元 律貴<span class="m-grade">（2年）</span></div>
+                    <div class="part-member">米山 史菜<span class="m-grade">（2年）</span></div>
+                    <div class="part-member">一戸 陽茉莉<span class="m-grade">（1年）</span></div>
+                </div>
+            </div>
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <img src="per.png" alt="パーカッション" class="part-icon-img" onerror="this.style.display='none'">
+                        <span class="part-name"><span class="part-emoji">🎵</span>パーカッション（Per）</span>
+                    </div>
+                    <span class="part-count">6名</span>
+                </div>
+                <div class="part-body">
+                    <div class="part-member leader"><span class="m-star">★</span>益園 結衣<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">今村 志朱<span class="m-grade">（2年）</span></div>
+                    <div class="part-member">水俣 舞音<span class="m-grade">（1年）</span></div>
+                    <div class="part-member">川尻 恵海<span class="m-grade">（1年）</span></div>
+                    <div class="part-member">神園 悠斗<span class="m-grade">（1年）</span></div>
+                    <div class="part-member">村若 由基<span class="m-grade">（1年）</span></div>
+                </div>
+            </div>
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <img src="sbss.png" alt="ストリングベース" class="part-icon-img" onerror="this.style.display='none'">
+                        <span class="part-name"><span class="part-emoji">🎵</span>ストリングベース（Sbsss）</span>
+                    </div>
+                    <span class="part-count">2名</span>
+                </div>
+                <div class="part-body">
+                    <div class="part-member leader"><span class="m-star">★</span>古市 真寛<span class="m-grade">（2年）</span></div>
+                    <div class="part-member">池田 妃寿<span class="m-grade">（1年）</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 一年の軌跡 ===== -->
+    <section id="journey">
+        <h2 class="section-title heading-modern heading-program heading-reveal">
+            <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">一</span>年の軌跡</span>
+            <span class="heading-en">A Year's Journey</span>
+        </h2>
+        <div class="part-toggle-controls reveal">
+            <button type="button" class="part-toggle-btn" id="journey-open-all"><i class="fas fa-circle-chevron-down"></i>開く</button>
+            <button type="button" class="part-toggle-btn close-btn-style" id="journey-close-all"><i class="fas fa-circle-chevron-up"></i>閉じる</button>
+        </div>
+        <p class="part-toggle-legend reveal">★2025年～2026年</p>
+        <div class="part-list reveal" id="journey-list">
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <span class="part-name"><span class="part-emoji">🎵</span>活動スケジュール</span>
+                    </div>
+                    <span class="part-count">10件</span>
+                </div>
+                <div class="part-body">
+                    <div class="part-member"><span class="journey-month">10月</span>谷山ふるさと祭り</div>
+                    <div class="part-member"><span class="journey-month">11月</span>文化祭</div>
+                    <div class="part-member"><span class="journey-month">12月</span>西谷山校区文化祭</div>
+                    <div class="part-member"><span class="journey-month">1月</span>ソロ・アンサンブルコンテスト</div>
+                    <div class="part-member"><span class="journey-month">2月</span>情報高校谷山公演合同演奏</div>
+                    <div class="part-member"><span class="journey-month">3月</span>谷山小学校定期演奏賛助出演</div>
+                    <div class="part-member"><span class="journey-month">4月</span>卒業式・入学式</div>
+                    <div class="part-member"><span class="journey-month">7月</span>夏の祭典</div>
+                    <div class="part-member"><span class="journey-month">7月</span>吹奏楽コンクール</div>
+                    <div class="part-member"><span class="journey-month">8月</span>にしたにマルシェ出演</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== 写真ギャラリー ===== -->
     <section id="gallery">
-  <section id="program">
         <h2 class="section-title heading-modern heading-program heading-reveal">
             <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">写</span>真ギャラリー</span>
-            <span class="heading-en">program</span>
+            <span class="heading-en">gallery</span>
         </h2>
         <div class="grid" id="grid"></div>
     </section>
@@ -672,6 +949,32 @@
             notesFallContainer.style.display = 'block';
         }
 
+        // ===== パート紹介：一括開く／閉じる =====
+        const partsOpenAllBtn = document.getElementById('parts-open-all');
+        const partsCloseAllBtn = document.getElementById('parts-close-all');
+        const partBodies = document.querySelectorAll('#part-list .part-body');
+        if (partsOpenAllBtn && partsCloseAllBtn) {
+            partsOpenAllBtn.addEventListener('click', () => {
+                partBodies.forEach(body => body.classList.add('open'));
+            });
+            partsCloseAllBtn.addEventListener('click', () => {
+                partBodies.forEach(body => body.classList.remove('open'));
+            });
+        }
+
+        // ===== 一年の軌跡：一括開く／閉じる =====
+        const journeyOpenAllBtn = document.getElementById('journey-open-all');
+        const journeyCloseAllBtn = document.getElementById('journey-close-all');
+        const journeyBodies = document.querySelectorAll('#journey-list .part-body');
+        if (journeyOpenAllBtn && journeyCloseAllBtn) {
+            journeyOpenAllBtn.addEventListener('click', () => {
+                journeyBodies.forEach(body => body.classList.add('open'));
+            });
+            journeyCloseAllBtn.addEventListener('click', () => {
+                journeyBodies.forEach(body => body.classList.remove('open'));
+            });
+        }
+
         // ===== ハンバーガーメニュー内のQRコード拡大／縮小 =====
         const qrCodeImg = document.getElementById('qr-code-img');
         if (qrCodeImg) {
@@ -698,7 +1001,7 @@
 
         // ===== タイトル文字アニメーション =====
         const titleEl = document.getElementById('title-text');
-        const lines = ["谷山中学校", "吹奏楽部", "第36回", "定期演奏会"];
+        const lines = ["第36回", "谷山中学校", "吹奏楽部", "定期演奏会"];
         lines.forEach((line, lineIdx) => {
             const div = document.createElement('div');
             line.split('').forEach((char, i) => {
