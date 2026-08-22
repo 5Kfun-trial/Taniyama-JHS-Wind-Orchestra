@@ -5,21 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>第36回 谷山中学校吹奏楽部定期演奏会</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #007bff;
-            --white: #ffffff;
-            --yellow: #ffeb3b;
-            --text: #333;
-            --azuki: #8a2e3b;
-            --sky: #87ceeb;
+            /* ===== カラートークン（落ち着いた真鍮×藍色×紙色のパレットに再設計） ===== */
+            --primary: #2f6f8f;       /* 藍色がかったブルー（旧：原色ブルー #007bff） */
+            --primary-dark: #1e4c60; /* ボタン等のグラデーション用の濃色 */
+            --white: #fffdf9;         /* 温かみのある白 */
+            --paper: 255, 250, 241;   /* カード背景用の紙色（rgba指定で使用） */
+            --yellow: #e3b34a;        /* 真鍮のようなゴールド（旧：原色イエロー #ffeb3b） */
+            --text: #3a332c;          /* 温かみのあるダークブラウン */
+            --azuki: #7c2c39;         /* 深みを増した小豆色 */
+            --azuki-dark: #5c1f28;
+            --sky: #bfe1ee;           /* 少し落ち着けた水色 */
+            --sky-dark: #7fb8cf;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { overflow-x: hidden; width: 100%; }
 
         body {
-            font-family: "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.7;
+            font-family: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.8;
             color: var(--text);
             background: url('002.png') no-repeat center center fixed;
             background-size: cover;
@@ -40,15 +48,15 @@
             background-repeat: no-repeat;
             background-position: center center;
             background-size: cover;
-            opacity: 0.6;
+            opacity: 0.70;
             z-index: -1;
             pointer-events: none;
         }
 
         /* ===== 校章ヘッダー ===== */
-        .school-header { position: absolute; top: 20px; left: 20px; display: flex; align-items: center; gap: 10px; background: var(--white); padding: 10px 15px; border-radius: 8px; z-index: 10; }
-        .kousyou { width: 40px; }
-        .school-name { color: var(--azuki); font-weight: bold; font-size: 0.85rem; }
+        .school-header { position: absolute; top: 18px; left: 18px; display: flex; align-items: center; gap: 10px; background: rgba(var(--paper), 0.95); padding: 9px 16px; border-radius: 10px; z-index: 10; box-shadow: 0 3px 10px rgba(60,30,20,0.15); }
+        .kousyou { width: 38px; }
+        .school-name { color: var(--azuki); font-weight: 700; font-size: 0.82rem; font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; letter-spacing: 0.03em; }
 
         /* ===== メインヘッダー（光エフェクト） ===== */
         header {
@@ -69,7 +77,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(120deg, rgba(135,206,235,0.25), rgba(255,255,255,0.05) 40%, rgba(135,206,235,0.25));
+            background: linear-gradient(120deg, rgba(47,111,143,0.30), rgba(255,255,255,0.05) 40%, rgba(191,225,238,0.30));
             background-size: 200% 200%;
             animation: gradientFlow 10s ease-in-out infinite;
             z-index: 1;
@@ -89,7 +97,7 @@
             left: -60%;
             width: 22%;
             height: 100%;
-            background: linear-gradient(115deg, transparent, rgba(255,255,255,0.55), transparent);
+            background: linear-gradient(115deg, transparent, rgba(255,255,255,0.5), transparent);
             transform: skewX(-18deg);
             animation: sweep 7s ease-in-out infinite;
         }
@@ -106,37 +114,37 @@
             position: relative;
             z-index: 3;
             padding: 40px 40px 20px 40px;
-            background: rgba(135, 206, 235, 0.4);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.35);
+            background: linear-gradient(160deg, rgba(47,111,143,0.42), rgba(124,44,57,0.28));
+            backdrop-filter: blur(12px);
+            border-radius: 22px;
+            border: 1px solid rgba(255,255,255,0.4);
             width: 85%;
             max-width: 600px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            box-shadow: 0 0 40px rgba(255,255,255,0.15);
+            box-shadow: 0 0 45px rgba(255,255,255,0.18), 0 20px 45px rgba(20,20,30,0.25);
             overflow: hidden;
         }
 
-        /* タイトル部分の背景（青色の透かし）に004.jpgを透明度60%で挿入 */
+        /* タイトル部分の背景（青色の透かし）に004.pngを透明度60%で挿入 */
         .title-container::before {
             content: '';
             position: absolute;
             inset: 0;
-            background-image: url('004.jpg');
+            background-image: url('004.png');
             background-repeat: no-repeat;
             background-position: center center;
             background-size: cover;
-            opacity: 0.5;
+            opacity: 0.45;
             z-index: -1;
             pointer-events: none;
         }
 
-        #title-text { font-size: clamp(2.3rem, 8vw, 4.5rem); color: var(--white); font-weight: 900; line-height: 1.15; text-align: center; margin-bottom: 40px; margin-top: -30px; text-shadow: 4px 4px 10px rgba(0,0,0,0.8); }
+        #title-text { font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: clamp(2.3rem, 8vw, 4.5rem); color: var(--white); font-weight: 800; line-height: 1.2; text-align: center; margin-bottom: 40px; margin-top: -30px; text-shadow: 3px 3px 12px rgba(0,0,0,0.75); }
 
         .char { display: inline-block; opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
-        .subtitle { color: var(--white); font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.5); padding-top: 15px; margin-top: auto; }
+        .subtitle { color: var(--white); font-size: 0.85rem; letter-spacing: 0.06em; border-top: 1px solid rgba(255,255,255,0.45); padding-top: 15px; margin-top: auto; }
 
         /* ===== スクロール誘導矢印 ===== */
         .scroll-down {
@@ -146,56 +154,54 @@
         }
         .scroll-down .chevron {
             display: inline-block;
-            font-size: 3.6rem;
+            font-size: 3.4rem;
             margin-left: 20px;
             color: var(--white);
             text-decoration: none;
             cursor: pointer;
             transform: rotate(90deg);
-            text-shadow: 0 0 10px rgba(255,255,255,0.8), 2px 2px 6px rgba(0,0,0,0.6);
-            animation: scrollBlink 1.6s ease-in-out infinite, chevronRainbow 5s linear infinite;
+            text-shadow: 0 0 10px rgba(255,255,255,0.75), 2px 2px 6px rgba(0,0,0,0.55);
+            animation: scrollBlink 1.6s ease-in-out infinite, chevronShimmer 6s ease-in-out infinite;
         }
         @keyframes scrollBlink {
             0%, 100% { opacity: 0.25; transform: translateY(0) rotate(90deg); }
             50% { opacity: 1; transform: translateY(6px) rotate(90deg); }
         }
-        /* 「»」を七色（虹色）に徐々に入れ替わるエフェクト */
-        @keyframes chevronRainbow {
-            0%    { color: #ff0000; }
-            14.3% { color: #ff9900; }
-            28.6% { color: #ffee00; }
-            42.9% { color: #33cc33; }
-            57.1% { color: #3399ff; }
-            71.4% { color: #6633cc; }
-            85.7% { color: #cc33ff; }
-            100%  { color: #ff0000; }
+        /* 「»」を真鍮×藍色×小豆色でやわらかく移り変わらせるエフェクト（虹色から上品なブランドカラーへ変更） */
+        @keyframes chevronShimmer {
+            0%    { color: #ffffff; }
+            25%   { color: var(--yellow); }
+            50%   { color: var(--sky); }
+            75%   { color: #f3d9c4; }
+            100%  { color: #ffffff; }
         }
 
         /* ===== ハンバーガーメニュー ===== */
-        .menu-btn { position: fixed; top: 20px; right: 20px; z-index: 1000; background: var(--primary); color: white; padding: 14px 18px; border-radius: 5px; cursor: pointer; transition: all 0.3s ease; font-size: 1.1rem; }
-        .menu-btn:hover, .menu-btn:active { color: var(--yellow); transform: scale(1.1); }
+        .menu-btn { position: fixed; top: 18px; right: 18px; z-index: 1000; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 13px 17px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 1.05rem; box-shadow: 0 4px 12px rgba(30,76,96,0.35); }
+        .menu-btn:hover, .menu-btn:active { color: var(--yellow); transform: scale(1.08); }
 
-        nav { position: fixed; top: 0; right: -100%; width: 280px; max-width: 80%; height: 100%; background: rgba(255,255,255,0.98); transition: 0.4s; padding-top: 80px; z-index: 999; box-shadow: -2px 0 10px rgba(0,0,0,0.1); overflow-y: auto; }
+        nav { position: fixed; top: 0; right: -100%; width: 280px; max-width: 80%; height: 100%; background: rgba(255,253,249,0.98); transition: 0.4s; padding-top: 80px; z-index: 999; box-shadow: -4px 0 18px rgba(60,30,20,0.14); overflow-y: auto; }
         nav.active { right: 0; }
-        nav ul { list-style: none; padding: 20px; }
-        nav a { text-decoration: none; color: var(--text); font-weight: bold; display: block; padding: 16px 15px; border-radius: 8px; transition: all 0.3s; font-size: 1rem; }
-        nav a:hover { background: #e0f0ff; color: var(--primary); }
+        nav ul { list-style: none; padding: 18px; }
+        nav a { text-decoration: none; color: var(--text); font-weight: 700; display: block; padding: 15px 16px; border-radius: 10px; transition: all 0.25s ease; font-size: 0.98rem; border-left: 3px solid transparent; }
+        nav a:hover { background: rgba(47,111,143,0.08); color: var(--primary-dark); border-left: 3px solid var(--sky-dark); }
 
         /* ===== ハンバーガーメニュー内のQRコード ===== */
         .qr-code-box {
             text-align: center;
-            padding: 20px 20px 15px;
-            border-bottom: 1px solid #e5e5e5;
-            margin: 0 0 5px;
+            padding: 22px 20px 16px;
+            border-bottom: 1px solid rgba(124,44,57,0.12);
+            margin: 0 0 6px;
         }
         .qr-code-img {
-            width: 90px;
-            height: 90px;
+            width: 88px;
+            height: 88px;
             object-fit: contain;
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 8px;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            box-shadow: 0 3px 10px rgba(60,30,20,0.18);
+            border: 2px solid rgba(191,225,238,0.7);
         }
         .qr-code-img:hover { transform: scale(1.05); }
         .qr-code-img.enlarged {
@@ -206,77 +212,80 @@
         .qr-code-label {
             font-size: 0.72rem;
             color: var(--text);
-            margin: 6px 0 0;
-            letter-spacing: 0.05em;
+            margin: 8px 0 0;
+            letter-spacing: 0.08em;
         }
 
         /* ===== 共通セクション ===== */
-        section { padding: 50px 20px; max-width: 1000px; margin: auto; }
-        .section-title { font-size: clamp(1.6rem, 5vw, 2.2rem); text-align: center; margin-bottom: 30px; color: var(--azuki); }
+        section { padding: 54px 20px; max-width: 1000px; margin: auto; }
+        .section-title { font-size: clamp(1.6rem, 5vw, 2.2rem); text-align: center; margin-bottom: 32px; color: var(--azuki); }
         .section-title i { color: var(--primary); margin-right: 8px; }
 
-        .info-box { background: rgba(255, 255, 255, 0.85); padding: clamp(24px, 6vw, 40px); border-radius: 15px; text-align: left; margin-bottom: 10px; font-size: clamp(1rem, 3.5vw, 1.3rem); }
-        .info-box h2 { font-size: clamp(1.6rem, 5vw, 2.2rem); margin-bottom: 20px; }
-        .info-box p { margin-bottom: 6px; }
+        .info-box { background: rgba(var(--paper), 0.9); padding: clamp(24px, 6vw, 40px); border-radius: 16px; text-align: left; margin-bottom: 10px; font-size: clamp(1rem, 3.5vw, 1.3rem); box-shadow: 0 6px 20px rgba(60,30,20,0.10); border-top: 3px solid var(--sky-dark); }
+        .info-box h2 { font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: clamp(1.6rem, 5vw, 2.2rem); margin-bottom: 20px; color: var(--azuki); }
+        .info-box p { margin-bottom: 7px; letter-spacing: 0.02em; }
 
-        .info-links { margin-top: 25px; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
-        .info-links a { background: var(--primary); color: var(--white); padding: 14px 24px; border-radius: 30px; text-decoration: none; font-weight: bold; display: inline-block; transition: all 0.3s ease; min-width: 44px; text-align: center; }
-        .info-links a:hover, .info-links a:active { color: var(--yellow); transform: scale(1.1); }
+        .info-links { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+        .info-links a { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: var(--white); padding: 14px 26px; border-radius: 30px; text-decoration: none; font-weight: 700; display: inline-block; transition: all 0.3s ease; min-width: 44px; text-align: center; box-shadow: 0 4px 12px rgba(30,76,96,0.3); }
+        .info-links a:hover, .info-links a:active { color: var(--yellow); transform: scale(1.08); box-shadow: 0 6px 18px rgba(30,76,96,0.4); }
 
         /* ===== プログラム ===== */
-        .program-list { background: rgba(255,255,255,0.85); border-radius: 15px; padding: clamp(20px, 5vw, 35px); }
-        .program-item { display: flex; align-items: center; gap: 15px; padding: 16px 0; border-bottom: 1px dashed rgba(138,46,59,0.3); }
+        .program-list { background: rgba(var(--paper), 0.9); border-radius: 16px; padding: clamp(20px, 5vw, 35px); box-shadow: 0 6px 20px rgba(60,30,20,0.10); border-top: 3px solid var(--azuki); }
+        .program-item { display: flex; align-items: center; gap: 15px; padding: 17px 0; border-bottom: 1px dashed rgba(124,44,57,0.3); }
         .program-item:last-child { border-bottom: none; }
-        .program-num { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .program-num { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; box-shadow: 0 3px 8px rgba(30,76,96,0.3); }
         .program-text { font-size: clamp(0.95rem, 3.5vw, 1.15rem); }
-        .program-text .piece { font-weight: bold; color: var(--azuki); }
-        .program-text .composer { font-size: 0.85em; color: #666; }
+        .program-text .piece { font-weight: 700; color: var(--azuki); font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; letter-spacing: 0.02em; }
+        .program-text .composer { font-size: 0.85em; color: #776b60; }
 
         /* ===== 部員紹介 ===== */
         .member-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-        .member-card { background: rgba(255,255,255,0.88); border-radius: 14px; padding: 18px 14px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
-        .member-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 3px solid var(--sky); }
-        .member-card .m-name { font-weight: bold; font-size: 1rem; color: var(--azuki); }
-        .member-card .m-part { font-size: 0.85rem; color: var(--primary); margin-bottom: 6px; }
-        .member-card .m-comment { font-size: 0.8rem; color: #555; }
+        .member-card { background: rgba(var(--paper), 0.92); border-radius: 15px; padding: 20px 14px; text-align: center; box-shadow: 0 6px 18px rgba(60,30,20,0.1); border-top: 3px solid var(--primary); }
+        .member-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 3px solid var(--sky); box-shadow: 0 3px 8px rgba(60,30,20,0.15); }
+        .member-card .m-name { font-weight: 700; font-size: 1rem; color: var(--azuki); font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+        .member-card .m-part { font-size: 0.85rem; color: var(--primary); margin-bottom: 6px; font-weight: 600; }
+        .member-card .m-comment { font-size: 0.8rem; color: #605850; }
 
         /* ===== パート紹介（一括開閉） ===== */
         .part-toggle-controls { display: flex; gap: 14px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
         .part-toggle-btn {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: var(--white);
             border: none;
-            padding: 12px 24px;
+            padding: 12px 26px;
             border-radius: 30px;
-            font-weight: bold;
+            font-weight: 700;
             font-size: clamp(0.85rem, 3.2vw, 0.95rem);
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(30,76,96,0.3);
         }
         .part-toggle-btn i { font-size: 1.15rem; }
-        .part-toggle-btn:hover, .part-toggle-btn:active { color: var(--yellow); transform: scale(1.08); }
-        .part-toggle-btn.close-btn-style { background: var(--azuki); }
+        .part-toggle-btn:hover, .part-toggle-btn:active { color: var(--yellow); transform: scale(1.08); box-shadow: 0 6px 18px rgba(30,76,96,0.4); }
+        .part-toggle-btn.close-btn-style { background: linear-gradient(135deg, var(--azuki), var(--azuki-dark)); box-shadow: 0 4px 12px rgba(92,31,40,0.3); }
+        .part-toggle-btn.close-btn-style:hover, .part-toggle-btn.close-btn-style:active { box-shadow: 0 6px 18px rgba(92,31,40,0.4); }
 
-        .part-toggle-legend { text-align: center; font-size: 0.85rem; color: var(--azuki); font-weight: bold; margin: -6px 0 18px; }
+        .part-toggle-legend { text-align: center; font-size: 0.85rem; color: var(--azuki); font-weight: 700; margin: -6px 0 20px; letter-spacing: 0.03em; }
         .part-toggle-legend .m-star { margin-right: 3px; }
 
-        .part-list { display: flex; flex-direction: column; gap: 12px; }
+        .part-list { display: flex; flex-direction: column; gap: 14px; }
         .part-card {
-            background: rgba(255,255,255,0.88);
-            border-radius: 14px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+            background: rgba(var(--paper), 0.92);
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(60,30,20,0.1);
             overflow: hidden;
+            border-top: 3px solid var(--sky-dark);
         }
         .part-header {
-            padding: 12px 20px;
+            padding: 13px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            font-weight: bold;
+            font-weight: 700;
             color: var(--azuki);
             font-size: clamp(0.95rem, 3.6vw, 1.1rem);
         }
@@ -288,10 +297,14 @@
             border-radius: 12px;
             border: 3px solid var(--sky);
             flex-shrink: 0;
+            box-shadow: 0 3px 8px rgba(60,30,20,0.15);
+            cursor: pointer;
+            transition: transform 0.25s ease;
         }
-        .part-header .part-name { min-width: 0; }
+        .part-icon-img:hover, .part-icon-img:active { transform: scale(1.06); }
+        .part-header .part-name { min-width: 0; font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; }
         .part-header .part-name .part-emoji { margin-right: 6px; }
-        .part-header .part-count { font-size: 0.75rem; font-weight: normal; color: var(--primary); background: rgba(0,123,255,0.1); padding: 3px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+        .part-header .part-count { font-size: 0.75rem; font-weight: 600; color: var(--primary); background: rgba(47,111,143,0.1); padding: 4px 11px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
         .part-body {
             max-height: 0;
             overflow: hidden;
@@ -301,70 +314,108 @@
             gap: 8px 10px;
             transition: max-height 0.45s ease, padding 0.45s ease;
         }
-        .part-body.open { max-height: 600px; padding: 0 20px 18px; }
+        .part-body.open { max-height: 600px; padding: 4px 20px 18px; }
         .part-member {
             display: flex;
             align-items: baseline;
             gap: 6px;
-            background: rgba(135,206,235,0.12);
+            background: rgba(191,225,238,0.18);
             border-radius: 20px;
             padding: 7px 14px;
             font-size: clamp(0.85rem, 3.2vw, 0.95rem);
         }
-        .part-member.leader { background: rgba(138,46,59,0.1); font-weight: bold; }
+        .part-member.leader { background: rgba(124,44,57,0.1); font-weight: 700; }
         .part-member .m-star { color: var(--azuki); }
-        .part-member .m-grade { font-size: 0.78em; color: #777; }
-        .journey-month { color: var(--primary); font-weight: bold; margin-right: 2px; }
+        .part-member .m-grade { font-size: 0.78em; color: #857a6e; }
+        .journey-month { color: var(--primary); font-weight: 700; margin-right: 2px; }
+        #journey-list .part-body { flex-direction: column; align-items: stretch; }
+        #journey-list .part-member { width: 100%; }
 
         /* ===== 顧問の紹介 ===== */
         .advisor-layout { display: flex; flex-direction: column; gap: 18px; }
         .advisor-row { display: flex; justify-content: center; }
         .advisor-row .advisor-card { width: 100%; max-width: 420px; }
-        .advisor-card { display: flex; align-items: center; gap: 14px; border-radius: 14px; padding: 18px 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); text-align: left; }
-        .advisor-card img { width: clamp(52px, 14vw, 70px); height: clamp(52px, 14vw, 70px); border-radius: 50%; object-fit: cover; border: 3px solid var(--sky); flex-shrink: 0; }
-        .advisor-card.advisor-head { background: rgba(255, 255, 255, 0.88); } /* 顧問：白 */
-        .advisor-card.advisor-sub { background: rgba(255, 255, 255, 0.88); } /* 副顧問：白 */
-        .advisor-card .a-role { font-size: 0.85rem; font-weight: bold; color: var(--primary); margin-bottom: 6px; }
-        .advisor-card .a-name { font-size: 1.05rem; font-weight: bold; color: var(--azuki); }
+        .advisor-card { display: flex; flex-direction: column; border-radius: 15px; padding: 18px 16px; box-shadow: 0 6px 18px rgba(60,30,20,0.1); text-align: left; border-top: 3px solid var(--azuki); }
+        .advisor-header { display: flex; align-items: center; gap: 14px; }
+        .advisor-card img { width: clamp(52px, 14vw, 70px); height: clamp(52px, 14vw, 70px); border-radius: 50%; object-fit: cover; border: 3px solid var(--sky); flex-shrink: 0; box-shadow: 0 3px 8px rgba(60,30,20,0.15); }
+        .advisor-card .advisor-info { min-width: 0; }
+        .advisor-card.advisor-head { background: rgba(var(--paper), 0.92); } /* 顧問：紙色 */
+        .advisor-card.advisor-sub { background: rgba(var(--paper), 0.92); } /* 副顧問：紙色 */
+        .advisor-card .a-role { font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; letter-spacing: 0.04em; }
+        .advisor-card .a-name { font-size: 1.08rem; font-weight: 700; color: var(--azuki); font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+
+        /* 名前の右側に配置する「ご挨拶／閉じる」トグルボタン */
+        .advisor-toggle-btn {
+            margin-left: auto;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            border: none;
+            padding: 9px 16px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(30,76,96,0.3);
+        }
+        .advisor-toggle-btn i { font-size: 1rem; }
+        .advisor-toggle-btn:hover, .advisor-toggle-btn:active { color: var(--yellow); transform: scale(1.06); }
+        .advisor-toggle-btn.close-btn-style { background: linear-gradient(135deg, var(--azuki), var(--azuki-dark)); }
+
+        /* ご挨拶本文（アコーディオンで開閉） */
+        .advisor-greeting-body {
+            max-height: 0;
+            overflow: hidden;
+            margin-top: 0;
+            padding-top: 0;
+            border-top: 0 solid rgba(124,44,57,0.15);
+            transition: max-height 0.45s ease, margin-top 0.45s ease, padding-top 0.45s ease;
+        }
+        .advisor-greeting-body.open { max-height: 900px; margin-top: 16px; padding-top: 16px; border-top-width: 1px; }
 
         /* ===== 顧問挨拶 ===== */
-        .greeting-box { background: rgba(255,255,255,0.88); border-radius: 15px; padding: clamp(24px, 6vw, 40px); position: relative; }
-        .greeting-box.advisor-head { background: rgba(255, 255, 255, 0.88); } /* 顧問：白 */
-        .greeting-box.advisor-sub { background: rgba(255, 255, 255, 0.88); } /* 副顧問：白 */
+        .greeting-box { background: rgba(var(--paper), 0.92); border-radius: 16px; padding: clamp(26px, 6vw, 42px); position: relative; box-shadow: 0 6px 20px rgba(60,30,20,0.1); border-top: 3px solid var(--azuki); }
+        .greeting-box.advisor-head { background: rgba(var(--paper), 0.92); }
+        .greeting-box.advisor-sub { background: rgba(var(--paper), 0.92); }
         .greeting-box + .greeting-box { margin-top: 26px; }
-        .greeting-box::before { content: '\201C'; font-size: 5rem; color: var(--sky); position: absolute; top: -10px; left: 15px; opacity: 0.5; font-family: Georgia, serif; }
-        .greeting-text { font-size: clamp(0.95rem, 3.8vw, 1.1rem); white-space: pre-line; margin-top: 10px; }
-        .greeting-name { text-align: right; margin-top: 20px; font-weight: bold; color: var(--azuki); }
+        .greeting-box::before { content: '\201C'; font-size: 5rem; color: var(--sky); position: absolute; top: -6px; left: 18px; opacity: 0.55; font-family: Georgia, serif; }
+        .greeting-text { font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: clamp(0.95rem, 3.8vw, 1.1rem); margin-top: 12px; letter-spacing: 0.01em; }
+        .greeting-name { text-align: right; margin-top: 22px; font-weight: 700; color: var(--azuki); font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; }
 
         /* ===== ギャラリー ===== */
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding-bottom: 80px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding-bottom: 80px; }
         @media (min-width: 768px) { .grid { grid-template-columns: repeat(4, 1fr); } }
-        .grid img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid white; transition: 0.3s; }
-        .grid img:hover { transform: scale(1.05); }
+        .grid img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; cursor: pointer; border: 3px solid rgba(var(--paper), 0.95); box-shadow: 0 4px 12px rgba(60,30,20,0.14); transition: 0.3s; }
+        .grid img:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(60,30,20,0.22); }
 
-        #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+        #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,10,14,0.92); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
         #lightbox-container { position: relative; display: flex; flex-direction: column; align-items: center; max-width: 100%; max-height: 100%; }
         .lb-image-wrap { width: 90vw; max-width: 700px; height: 55vh; max-height: 560px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; z-index: 1; }
-        #lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; border: 3px solid white; border-radius: 5px; transition: transform 0.4s ease; image-orientation: none; }
-        .lb-caption { color: white; margin-top: 20px; text-align: center; line-height: 1.5; font-size: 1.1rem; font-weight: bold; position: relative; z-index: 10; }
+        #lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; border: 3px solid var(--white); border-radius: 6px; transition: transform 0.4s ease; image-orientation: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .lb-caption { color: var(--white); margin-top: 20px; text-align: center; line-height: 1.5; font-size: 1.05rem; font-weight: 700; position: relative; z-index: 10; }
 
         /* ===== ライトボックス：前後の写真へ移動する矢印（画像の下・コメントの直上） ===== */
         .lb-nav { width: 90vw; max-width: 700px; margin-top: 18px; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 10; }
-        .lb-nav-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: bold; cursor: pointer; transition: all 0.3s ease; user-select: none; }
+        .lb-nav-btn { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; user-select: none; box-shadow: 0 4px 12px rgba(0,0,0,0.35); }
         .lb-nav-btn:hover, .lb-nav-btn:active { color: var(--yellow); transform: scale(1.15); }
         .lb-nav-btn.disabled { opacity: 0.3; pointer-events: none; }
 
         /* ===== ライトボックス：画像操作ツールバー（画像より必ず手前・大きめタップ領域） ===== */
         .lb-toolbar { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 20px; position: relative; z-index: 10; }
-        .lb-tool-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; cursor: pointer; transition: all 0.3s ease; }
+        .lb-tool-btn { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.35); }
         .lb-tool-btn:hover, .lb-tool-btn:active { color: var(--yellow); transform: scale(1.15); }
 
         /* ===== 閉じるボタン（下に大きく・目立つ配置） ===== */
-        .lb-close-btn { position: relative; z-index: 10; margin-top: 24px; background: var(--azuki); color: white; padding: 16px 36px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.3s ease; }
+        .lb-close-btn { position: relative; z-index: 10; margin-top: 24px; background: linear-gradient(135deg, var(--azuki), var(--azuki-dark)); color: white; padding: 16px 38px; border-radius: 30px; font-weight: 700; font-size: 1.05rem; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.3s ease; box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
         .lb-close-btn i { font-size: 1.3rem; }
         .lb-close-btn:hover, .lb-close-btn:active { color: var(--yellow); transform: scale(1.1); }
 
-        #to-top { position: fixed; bottom: 20px; right: 20px; background: var(--primary); width: 50px; height: 50px; border-radius: 50%; color: white; display: none; align-items: center; justify-content: center; z-index: 900; cursor: pointer; transition: all 0.3s ease; }
+        #to-top { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); width: 50px; height: 50px; border-radius: 50%; color: white; display: none; align-items: center; justify-content: center; z-index: 900; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 14px rgba(30,76,96,0.35); }
         #to-top:hover, #to-top:active { color: var(--yellow); transform: scale(1.1); }
 
         /* ===== スクロール出現アニメーション ===== */
@@ -376,23 +427,23 @@
         .heading-reveal.show { opacity: 1; transform: translateY(0); }
 
         /* ===== 見出し：今風デザイン（日本語＋小さな英語表記） ===== */
-        .heading-modern { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .heading-modern .heading-jp { font-size: clamp(2rem, 6vw, 3rem); font-weight: 700; letter-spacing: 0.06em; color: var(--azuki); }
+        .heading-modern { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .heading-modern .heading-jp { font-size: clamp(2.2rem, 6vw, 3.6rem); font-weight: 700; letter-spacing: 0.06em; color: var(--azuki); }
         .heading-modern .heading-jp i { color: var(--primary); margin-right: 8px; font-size: 0.85em; }
-        .heading-modern .heading-en { font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--primary); font-weight: 600; }
+        .heading-modern .heading-en { font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--primary); font-weight: 700; }
 
-        /* プログラム見出し専用：明朝体＋「プ」の文字だけあずき色 */
-        .heading-program .heading-jp { font-family: "Hiragino Mincho ProN", "Yu Mincho", "MS Mincho", serif; font-weight: 700; letter-spacing: 0.14em; color: var(--text); }
+        /* プログラム見出し専用：明朝体＋アクセント文字だけあずき色 */
+        .heading-program .heading-jp { font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", "MS Mincho", serif; font-weight: 700; letter-spacing: 0.16em; color: var(--text); }
         .heading-program .heading-jp .accent-char { color: var(--azuki); }
 
         /* ===== フッター（個人情報保護・転用禁止） ===== */
-        .site-footer { text-align: center; padding: 30px 20px 60px; background: rgba(255,255,255,0.6); color: var(--text); font-size: 0.85rem; }
+        .site-footer { text-align: center; padding: 32px 20px 60px; background: rgba(var(--paper), 0.55); color: var(--text); font-size: 0.85rem; }
         .site-footer p { margin: 4px 0; }
-        .site-footer .footer-notice { font-weight: bold; color: var(--azuki); }
+        .site-footer .footer-notice { font-weight: 700; color: var(--azuki); }
 
         /* ===== スマホ最適化（横スクロール防止・余白調整） ===== */
         @media (max-width: 480px) {
-            section { padding: 35px 16px; }
+            section { padding: 38px 16px; }
             .info-box, .program-list, .greeting-box, .member-card { padding: 20px 16px; }
             .info-links { flex-direction: column; align-items: stretch; }
             .info-links a { text-align: center; }
@@ -460,7 +511,6 @@
             <li><a href="#program">プログラム</a></li>
             <li><a href="#members">部員紹介</a></li>
             <li><a href="#advisors">顧問紹介</a></li>
-            <li><a href="#greeting">顧問挨拶</a></li>
             <li><a href="#parts">パート紹介</a></li>
             <li><a href="#journey">一年の軌跡</a></li>
             <li><a href="#gallery">写真ギャラリー</a></li>
@@ -525,13 +575,13 @@
             <!-- 部員紹介データをここに展開（下は表示イメージのサンプルです） -->
             <div class="member-card">
                 <img src="member01.png" alt="部員写真">
-                <div class="m-name">部長<br>氏名：戌亥 聖美</div>
+                <div class="m-name">部長<br>氏名：谷山 中央</div>
                 <div class="m-part">担当パート：TP</div>
-                <div class="m-comment">部長：皆さん！楽しんでください！！</div>
+                <div class="m-comment">皆さん！楽しんでください！！</div>
             </div>
             <div class="member-card">
                 <img src="member02.png" alt="部員写真">
-                <div class="m-name">副部長<br>氏名：村岡 実音</div>
+                <div class="m-name">副部長<br>氏名：谷山 中央</div>
                 <div class="m-part">担当パート：Asax</div>
                 <div class="m-comment">皆で届ける！私たちの思い！！</div>
             </div>
@@ -548,81 +598,69 @@
         <div class="advisor-layout reveal">
             <div class="advisor-row">
                 <div class="advisor-card advisor-head">
-                    <img src="member03.png" alt="顧問 写真">
-                    <div class="advisor-info">
-                        <div class="a-role">顧問</div>
-                        <div class="a-name">島崎 英子 先生</div>
+                    <div class="advisor-header">
+                        <img src="member03.png" alt="顧問 写真">
+                        <div class="advisor-info">
+                            <div class="a-role">顧問</div>
+                            <div class="a-name">島崎 英子 先生</div>
+                        </div>
+                        <button type="button" class="advisor-toggle-btn" data-target="advisor-greet-1"><i class="fas fa-circle-chevron-down"></i><span class="toggle-label">ご挨拶</span></button>
                     </div>
-                </div>
-            </div>
-            <div class="advisor-row">
-                <div class="advisor-card advisor-sub">
-                    <img src="member04.png" alt="副顧問 写真">
-                    <div class="advisor-info">
-                        <div class="a-role">副顧問</div>
-                        <div class="a-name">二川 加奈美 先生</div>
-                    </div>
-                </div>
-            </div>
-            <div class="advisor-row">
-                <div class="advisor-card advisor-sub">
-                    <img src="member05.png" alt="副顧問 写真">
-                    <div class="advisor-info">
-                        <div class="a-role">副顧問</div>
-                        <div class="a-name">宮之原 せつみ 先生</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== 顧問挨拶 ===== -->
-  <section id="greeting">
-        <h2 class="section-title heading-modern heading-program heading-reveal">
-            <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">顧</span>問挨拶</span>
-            <span class="heading-en">Advisor's Greeting</span>
-        </h2>
-        <div class="greeting-box advisor-head reveal">
-            <!-- ここに顧問挨拶文を挿入 -->
-            <p class="greeting-text"><p><br>顧問挨拶<br>
-皆さま、本日は谷山中学校吹奏楽部の定期演奏会にお越しいただき、ありがとうございます。<br>
+                    <div class="advisor-greeting-body" id="advisor-greet-1">
+                        <p class="greeting-text">皆さま、本日は谷山中学校吹奏楽部の定期演奏会にお越しいただき、ありがとうございます。<br>
 顧問の島崎英子です。<br>
 <br>
 今朝、生徒から「先生、今日は指揮棒だけは絶対忘れないでね！」と念押しされました。<br>
-……そんなに心配される先生でいいのでしょうか。<br>
-でも、こうして無事に持ってきていますのでご安心ください。<br>
+……心配される先生でいいのでしょうか。<br>
+でも、ちゃんと持ってきていますのでご安心ください。<br>
 <br>
-吹奏楽は、音だけでなく “仲間の優しさ” が響く世界です。<br>
-今日のステージには、練習で私を笑わせてくれた生徒たちの、まっすぐな音と、ちょっとしたお茶目さが詰まっています。<br>
+吹奏楽は、音だけでなく“仲間の優しさ”が響く世界です。<br>
 <br>
 どうぞ最後まで、温かくお楽しみください。</p>
-            <div class="greeting-name">顧問　島崎 英子</div>
-        </div>
-
-        <div class="greeting-box advisor-sub reveal">
-            <!-- ここに副顧問挨拶文を挿入 -->
-            <p class="greeting-text"><p><br>副顧問挨拶<br>
-副顧問の二川加奈美です。<br>
-<br>
-今日は「先生、緊張してませんか？」と生徒に聞かれ、思わず「え、あなたたちの方が心配です」と返してしまいました。<br>
+                        <div class="greeting-name">顧問　島崎 英子</div>
+                    </div>
+                </div>
+            </div>
+            <div class="advisor-row">
+                <div class="advisor-card advisor-sub">
+                    <div class="advisor-header">
+                        <img src="member04.png" alt="副顧問 写真">
+                        <div class="advisor-info">
+                            <div class="a-role">副顧問</div>
+                            <div class="a-name">二川 加奈美 先生</div>
+                        </div>
+                        <button type="button" class="advisor-toggle-btn" data-target="advisor-greet-2"><i class="fas fa-circle-chevron-down"></i><span class="toggle-label">ご挨拶</span></button>
+                    </div>
+                    <div class="advisor-greeting-body" id="advisor-greet-2">
+                        <p class="greeting-text">副顧問の二川加奈美です。<br>
 <br>
 毎日の練習で聞こえてくる音は、少しずつですが確実に重なり合って、今日のこの舞台につながっています。<br>
 <br>
 どうか温かい拍手で見守っていただけたら嬉しいです。</p>
-            <div class="greeting-name">副顧問　二川 加奈美</div>
-        </div>
-
-        <div class="greeting-box advisor-sub reveal">
-            <!-- ここに副顧問挨拶文を挿入 -->
-            <p class="greeting-text"><p><br>副顧問挨拶<br>
-副顧問の宮之原せつみです。<br>
+                        <div class="greeting-name">副顧問　二川 加奈美</div>
+                    </div>
+                </div>
+            </div>
+            <div class="advisor-row">
+                <div class="advisor-card advisor-sub">
+                    <div class="advisor-header">
+                        <img src="member05.png" alt="副顧問 写真">
+                        <div class="advisor-info">
+                            <div class="a-role">副顧問</div>
+                            <div class="a-name">宮之原 せつみ 先生</div>
+                        </div>
+                        <button type="button" class="advisor-toggle-btn" data-target="advisor-greet-3"><i class="fas fa-circle-chevron-down"></i><span class="toggle-label">ご挨拶</span></button>
+                    </div>
+                    <div class="advisor-greeting-body" id="advisor-greet-3">
+                        <p class="greeting-text">副顧問の宮之原せつみです。<br>
 <br>
-練習中、楽器のケースの中からお菓子の袋が出てきたことは……ここだけの話にしておきます。<br>
-<br>
-そんな微笑ましい毎日を経て、生徒たちは今日という日を迎えました。<br>
+微笑ましい毎日を経て、生徒たちは今日という日を迎えました。<br>
 <br>
 最後まで、どうぞごゆっくりお楽しみください。</p>
-            <div class="greeting-name">副顧問　宮之原 せつみ</div>
+                        <div class="greeting-name">副顧問　宮之原 せつみ</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -633,8 +671,7 @@
             <span class="heading-en">Meet the Sections</span>
         </h2>
         <div class="part-toggle-controls reveal">
-            <button type="button" class="part-toggle-btn" id="parts-open-all"><i class="fas fa-circle-chevron-down"></i>開く</button>
-            <button type="button" class="part-toggle-btn close-btn-style" id="parts-close-all"><i class="fas fa-circle-chevron-up"></i>閉じる</button>
+            <button type="button" class="part-toggle-btn" id="parts-toggle-all"><i class="fas fa-circle-chevron-down"></i><span class="toggle-label">開く</span></button>
         </div>
         <p class="part-toggle-legend reveal"><span class="m-star">★</span>パートリーダー</p>
         <div class="part-list reveal" id="part-list">
@@ -799,8 +836,7 @@
             <span class="heading-en">A Year's Journey</span>
         </h2>
         <div class="part-toggle-controls reveal">
-            <button type="button" class="part-toggle-btn" id="journey-open-all"><i class="fas fa-circle-chevron-down"></i>開く</button>
-            <button type="button" class="part-toggle-btn close-btn-style" id="journey-close-all"><i class="fas fa-circle-chevron-up"></i>閉じる</button>
+            <button type="button" class="part-toggle-btn" id="journey-toggle-all"><i class="fas fa-circle-chevron-down"></i><span class="toggle-label">開く</span></button>
         </div>
         <p class="part-toggle-legend reveal">★2025年～2026年</p>
         <div class="part-list reveal" id="journey-list">
@@ -812,17 +848,17 @@
                     <span class="part-count">10件</span>
                 </div>
                 <div class="part-body">
-                    <div class="part-member"><span class="journey-month">　　　10月</span>谷山ふるさと祭り　　　　　　　　</div>
-                    <div class="part-member"><span class="journey-month">　　　11月</span>文化祭　　　　　　　　　　　　　</div>
-                    <div class="part-member"><span class="journey-month">　　　12月</span>西谷山校区文化祭　　　　　　　　</div>
-                    <div class="part-member"><span class="journey-month">　　　12月</span>ソロ・アンサンブルコンテスト　　</div>
-                    <div class="part-member"><span class="journey-month">　　　 2月</span>情報高校谷山公演合同演奏　　　　</div>
-                    <div class="part-member"><span class="journey-month">　　　 3月</span>谷山小学校定期演奏賛助出演　　　</div>
-                    <div class="part-member"><span class="journey-month">　　　 4月</span>卒業式・入学式　　　　　　　　　</div>
-                    <div class="part-member"><span class="journey-month">　　　 7月</span>夏の祭典　　　　　　　　　　　　</div>
-                    <div class="part-member"><span class="journey-month">　　　 7月</span>吹奏楽コンクール　　　　　　　　</div>
-                    <div class="part-member"><span class="journey-month">　　　 8月</span>南特別支援学校依頼演奏　　　　　</div>
-                    <div class="part-member"><span class="journey-month">　　　 8月</span>にしたにマルシェ出演　　　　　　</div>
+                    <div class="part-member"><span class="journey-month">　　10月</span>谷山ふるさと祭り</div>
+                    <div class="part-member"><span class="journey-month">　　11月</span>文化祭</div>
+                    <div class="part-member"><span class="journey-month">　　12月</span>西谷山校区文化祭</div>
+                    <div class="part-member"><span class="journey-month">　　12月</span>ソロ・アンサンブルコンテスト</div>
+                    <div class="part-member"><span class="journey-month">　　 2月</span>情報高校谷山公演合同演奏</div>
+                    <div class="part-member"><span class="journey-month">　　 3月</span>谷山小学校定期演奏賛助出演</div>
+                    <div class="part-member"><span class="journey-month">　　 4月</span>卒業式・入学式</div>
+                    <div class="part-member"><span class="journey-month">　　 7月</span>夏の祭典</div>
+                    <div class="part-member"><span class="journey-month">　　 7月</span>吹奏楽コンクール</div>
+                    <div class="part-member"><span class="journey-month">　　 8月</span>南特別支援学校依頼演奏</div>
+                    <div class="part-member"><span class="journey-month">　　 8月</span>にしたにマルシェ出演</div>
                 </div>
             </div>
         </div>
@@ -838,7 +874,7 @@
     </section>
 
     <footer class="site-footer">
-        <p>個人情報保護&copy;</p>
+        <p>- 製作；naoki Kitamura&copy; -</p>
         <p class="footer-notice">※転用禁止</p>
     </footer>
 
@@ -909,12 +945,12 @@
                 note.className = 'falling-note';
                 note.textContent = noteChars[Math.floor(Math.random() * noteChars.length)];
 
-                const size = 42 + Math.random() * 62;       // 42px〜62px
-                const startLeft = Math.random() * 70 - 15;   // -15vw〜70vw（左上寄りから登場し、右下へ抜ける）
+                const size = 28 + Math.random() * 64;       // 26px〜64px
+                const startLeft = Math.random() * 70 - 15;   // -15vw〜55vw（左上寄りから登場し、右下へ抜ける）
                 const duration = 3.5 + Math.random() * 3;    // 3.5秒〜6.5秒（「ぴゅーん」と速めに流れる）
                 const drift = 70 + Math.random() * 70;       // 70vw〜140vw 右方向へ大きく流れる横移動量
                 const rotateDir = Math.random() < 0.5 ? -1 : 1;
-                const peakOpacity = 0.20 + Math.random() * 0.50; // 0.20〜0.50 でランダムな透明度
+                const peakOpacity = 0.35 + Math.random() * 0.50; // 0.35〜1.0 でランダムな透明度
                 const originTop = spawnHeights[Math.floor(Math.random() * spawnHeights.length)]; // 3か所からランダムに1つだけ選択
 
                 note.style.top = originTop;
@@ -950,31 +986,52 @@
             notesFallContainer.style.display = 'block';
         }
 
-        // ===== パート紹介：一括開く／閉じる =====
-        const partsOpenAllBtn = document.getElementById('parts-open-all');
-        const partsCloseAllBtn = document.getElementById('parts-close-all');
-        const partBodies = document.querySelectorAll('#part-list .part-body');
-        if (partsOpenAllBtn && partsCloseAllBtn) {
-            partsOpenAllBtn.addEventListener('click', () => {
-                partBodies.forEach(body => body.classList.add('open'));
-            });
-            partsCloseAllBtn.addEventListener('click', () => {
-                partBodies.forEach(body => body.classList.remove('open'));
+        // ===== 開閉トグルボタンの共通処理（1つのボタンで開く⇔閉じるを切り替え） =====
+        function setupToggleAllButton(btn, bodies) {
+            if (!btn) return;
+            let isOpen = false;
+            const icon = btn.querySelector('i');
+            const label = btn.querySelector('.toggle-label');
+            btn.addEventListener('click', () => {
+                isOpen = !isOpen;
+                bodies.forEach(body => body.classList.toggle('open', isOpen));
+                btn.classList.toggle('close-btn-style', isOpen);
+                if (icon) icon.className = isOpen ? 'fas fa-circle-chevron-up' : 'fas fa-circle-chevron-down';
+                if (label) label.textContent = isOpen ? '閉じる' : '開く';
             });
         }
 
+        // ===== パート紹介：一括開く／閉じる =====
+        const partsToggleAllBtn = document.getElementById('parts-toggle-all');
+        const partBodies = document.querySelectorAll('#part-list .part-body');
+        setupToggleAllButton(partsToggleAllBtn, partBodies);
+
+        // ===== パート紹介：楽器の画像をタップして個別に開閉 =====
+        document.querySelectorAll('#part-list .part-icon-img').forEach(img => {
+            img.addEventListener('click', () => {
+                const body = img.closest('.part-card').querySelector('.part-body');
+                if (body) body.classList.toggle('open');
+            });
+        });
+
         // ===== 一年の軌跡：一括開く／閉じる =====
-        const journeyOpenAllBtn = document.getElementById('journey-open-all');
-        const journeyCloseAllBtn = document.getElementById('journey-close-all');
+        const journeyToggleAllBtn = document.getElementById('journey-toggle-all');
         const journeyBodies = document.querySelectorAll('#journey-list .part-body');
-        if (journeyOpenAllBtn && journeyCloseAllBtn) {
-            journeyOpenAllBtn.addEventListener('click', () => {
-                journeyBodies.forEach(body => body.classList.add('open'));
+        setupToggleAllButton(journeyToggleAllBtn, journeyBodies);
+
+        // ===== 顧問の紹介：名前右側の「ご挨拶／閉じる」ボタンで個別に開閉 =====
+        document.querySelectorAll('.advisor-toggle-btn').forEach(btn => {
+            const body = document.getElementById(btn.dataset.target);
+            if (!body) return;
+            const icon = btn.querySelector('i');
+            const label = btn.querySelector('.toggle-label');
+            btn.addEventListener('click', () => {
+                const isOpen = body.classList.toggle('open');
+                btn.classList.toggle('close-btn-style', isOpen);
+                if (icon) icon.className = isOpen ? 'fas fa-circle-chevron-up' : 'fas fa-circle-chevron-down';
+                if (label) label.textContent = isOpen ? '閉じる' : 'ご挨拶';
             });
-            journeyCloseAllBtn.addEventListener('click', () => {
-                journeyBodies.forEach(body => body.classList.remove('open'));
-            });
-        }
+        });
 
         // ===== ハンバーガーメニュー内のQRコード拡大／縮小 =====
         const qrCodeImg = document.getElementById('qr-code-img');
