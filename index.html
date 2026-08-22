@@ -377,7 +377,7 @@
 
         /* ===== 見出し：今風デザイン（日本語＋小さな英語表記） ===== */
         .heading-modern { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .heading-modern .heading-jp { font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: 700; letter-spacing: 0.06em; color: var(--azuki); }
+        .heading-modern .heading-jp { font-size: clamp(2rem, 6vw, 3rem); font-weight: 700; letter-spacing: 0.06em; color: var(--azuki); }
         .heading-modern .heading-jp i { color: var(--primary); margin-right: 8px; font-size: 0.85em; }
         .heading-modern .heading-en { font-size: 0.75rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--primary); font-weight: 600; }
 
@@ -812,16 +812,17 @@
                     <span class="part-count">10件</span>
                 </div>
                 <div class="part-body">
-                    <div class="part-member"><span class="journey-month">10月</span>谷山ふるさと祭り</div>
-                    <div class="part-member"><span class="journey-month">11月</span>文化祭</div>
-                    <div class="part-member"><span class="journey-month">12月</span>西谷山校区文化祭</div>
-                    <div class="part-member"><span class="journey-month">1月</span>ソロ・アンサンブルコンテスト</div>
-                    <div class="part-member"><span class="journey-month">2月</span>情報高校谷山公演合同演奏</div>
-                    <div class="part-member"><span class="journey-month">3月</span>谷山小学校定期演奏賛助出演</div>
-                    <div class="part-member"><span class="journey-month">4月</span>卒業式・入学式</div>
-                    <div class="part-member"><span class="journey-month">7月</span>夏の祭典</div>
-                    <div class="part-member"><span class="journey-month">7月</span>吹奏楽コンクール</div>
-                    <div class="part-member"><span class="journey-month">8月</span>にしたにマルシェ出演</div>
+                    <div class="part-member"><span class="journey-month">　　　10月</span>谷山ふるさと祭り　　　　　　　　</div>
+                    <div class="part-member"><span class="journey-month">　　　11月</span>文化祭　　　　　　　　　　　　　</div>
+                    <div class="part-member"><span class="journey-month">　　　12月</span>西谷山校区文化祭　　　　　　　　</div>
+                    <div class="part-member"><span class="journey-month">　　　12月</span>ソロ・アンサンブルコンテスト　　</div>
+                    <div class="part-member"><span class="journey-month">　　　 2月</span>情報高校谷山公演合同演奏　　　　</div>
+                    <div class="part-member"><span class="journey-month">　　　 3月</span>谷山小学校定期演奏賛助出演　　　</div>
+                    <div class="part-member"><span class="journey-month">　　　 4月</span>卒業式・入学式　　　　　　　　　</div>
+                    <div class="part-member"><span class="journey-month">　　　 7月</span>夏の祭典　　　　　　　　　　　　</div>
+                    <div class="part-member"><span class="journey-month">　　　 7月</span>吹奏楽コンクール　　　　　　　　</div>
+                    <div class="part-member"><span class="journey-month">　　　 8月</span>南特別支援学校依頼演奏　　　　　</div>
+                    <div class="part-member"><span class="journey-month">　　　 8月</span>にしたにマルシェ出演　　　　　　</div>
                 </div>
             </div>
         </div>
@@ -908,12 +909,12 @@
                 note.className = 'falling-note';
                 note.textContent = noteChars[Math.floor(Math.random() * noteChars.length)];
 
-                const size = 16 + Math.random() * 22;       // 16px〜38px
-                const startLeft = Math.random() * 70 - 15;   // -15vw〜55vw（左上寄りから登場し、右下へ抜ける）
+                const size = 42 + Math.random() * 62;       // 42px〜62px
+                const startLeft = Math.random() * 70 - 15;   // -15vw〜70vw（左上寄りから登場し、右下へ抜ける）
                 const duration = 3.5 + Math.random() * 3;    // 3.5秒〜6.5秒（「ぴゅーん」と速めに流れる）
                 const drift = 70 + Math.random() * 70;       // 70vw〜140vw 右方向へ大きく流れる横移動量
                 const rotateDir = Math.random() < 0.5 ? -1 : 1;
-                const peakOpacity = 0.35 + Math.random() * 0.65; // 0.35〜1.0 でランダムな透明度
+                const peakOpacity = 0.20 + Math.random() * 0.50; // 0.20〜0.50 でランダムな透明度
                 const originTop = spawnHeights[Math.floor(Math.random() * spawnHeights.length)]; // 3か所からランダムに1つだけ選択
 
                 note.style.top = originTop;
