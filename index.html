@@ -331,6 +331,15 @@
         #journey-list .part-body { flex-direction: column; align-items: stretch; }
         #journey-list .part-member { width: 100%; }
 
+        /* ===== プログラム（アコーディオン化：見出し部分をタップして開閉） ===== */
+        #program-list .part-body { flex-direction: column; align-items: stretch; }
+        #program-list .part-body.open { max-height: 1200px; }
+        #program-list .part-body .program-item { width: 100%; padding: 15px 0; }
+        #program-list .part-header { cursor: pointer; }
+        .part-header-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        #program-list .part-header-icon { color: var(--primary); font-size: 1.05rem; transition: transform 0.3s ease; }
+        #program-list .part-header.open .part-header-icon { transform: rotate(180deg); }
+
         /* ===== 顧問の紹介 ===== */
         .advisor-layout { display: flex; flex-direction: column; gap: 18px; }
         .advisor-row { display: flex; justify-content: center; }
@@ -543,25 +552,93 @@
             <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">プ</span>ログラム</span>
             <span class="heading-en">program</span>
         </h2>
-        <div class="program-list reveal">
-            <!-- ここにプログラム一覧データを挿入（下は表示イメージのサンプルです） -->
-            <div class="program-item">
-                <div class="program-num">1</div>
-                <div class="program-text"><span class="piece">2026年度　全日本吹奏楽コンクール<br>課題曲</span><br><span class="composer">あつまれおもちゃのマルチャ!」
-                <br>－－－<br>－－－</span></div>
+        <div class="part-toggle-controls reveal">
+            <button type="button" class="part-toggle-btn" id="program-toggle-all"><i class="fas fa-circle-chevron-down"></i><span class="toggle-label">開く</span></button>
+        </div>
+        <div class="part-list reveal" id="program-list">
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <span class="part-name"><span class="part-emoji">🎵</span>第1部</span>
+                    </div>
+                    <div class="part-header-right">
+                        <span class="part-count">3曲</span>
+                        <i class="fas fa-chevron-down part-header-icon"></i>
+                    </div>
+                </div>
+                <div class="part-body">
+                    <div class="program-item">
+                        <div class="program-num">1</div>
+                        <div class="program-text"><span class="piece">2026年全日本吹奏楽コンクール課題曲Ⅰ<br>「夕映えの丘」</span><br><span class="composer">作曲：森山　至貴</span></div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-num">2</div>
+                        <div class="program-text"><span class="piece">2026年全日本吹奏楽コンクール課題曲Ⅲ<br>「あつまれ！おもちゃのマルチャ」</span><br><span class="composer">作曲：伊藤　士恩</span></div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-num">3</div>
+                        <div class="program-text"><span class="piece">大いなる約束の大地<br>〜チンギス・ハーン</span><br><span class="composer">作曲：鈴木　英史</span></div>
+                    </div>
+                </div>
             </div>
-            <div class="program-item">
-                <div class="program-num">2</div>
-                <div class="program-text"><span class="piece">大いなる約束の大地<br>〜チンギス・ハーン</span><br><span class="composer">－－－
-                <br>－－－<br>－－－</span></div>
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <span class="part-name"><span class="part-emoji">🎵</span>第2部</span>
+                    </div>
+                    <div class="part-header-right">
+                        <span class="part-count">5曲</span>
+                        <i class="fas fa-chevron-down part-header-icon"></i>
+                    </div>
+                </div>
+                <div class="part-body">
+                    <div class="program-item">
+                        <div class="program-num">1</div>
+                        <div class="program-text"><span class="piece">アンサンブル</span><br><span class="composer">未定</span></div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-num">2</div>
+                        <div class="program-text"><span class="piece">アンサンブル</span><br><span class="composer">未定</span></div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-num">3</div>
+                        <div class="program-text"><span class="piece">学園天国</span><br><span class="composer">作曲：井上　忠夫　編曲：山下　国俊</span></div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-num">4</div>
+                        <div class="program-text"><span class="piece">かわいいだけじゃだめですか？</span><br><span class="composer">作曲：早川　博隆・渡邉　俊彦　編曲：浅野　由莉</span></div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-num">5</div>
+                        <div class="program-text"><span class="piece">J-BEST'25<br>〜2025年J-POPベストヒッツスペシャルメドレー〜</span><br><span class="composer">編曲：宮川　成治</span></div>
+                    </div>
+                </div>
             </div>
-            <div class="program-item">
-                <div class="program-num">3</div>
-                <div class="program-text"><span class="piece">かわいいだけじゃだめですか？<br>他</span><br><span class="composer">－－－
-                <br>－－－
-                <br>－－－</span></div>
+            <div class="part-card">
+                <div class="part-header">
+                    <div class="part-name-group">
+                        <span class="part-name"><span class="part-emoji">🎵</span>第3部</span>
+                    </div>
+                    <div class="part-header-right">
+                        <span class="part-count">3曲</span>
+                        <i class="fas fa-chevron-down part-header-icon"></i>
+                    </div>
+                </div>
+                <div class="part-body">
+                    <div class="program-item">
+                        <div class="program-num">1</div>
+                        <div class="program-text"><span class="piece">カイト<br>〜1・2年生による〜</span><br><span class="composer">作曲：米津　玄師　編曲：郷間　幹男</span></div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-num">2</div>
+                        <div class="program-text"><span class="piece">ありがとう<br>〜3年生による〜</span><br><span class="composer">作曲：水野　良樹</span></div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-num">3</div>
+                        <div class="program-text"><span class="piece">SING SING SING</span><br><span class="composer">作曲：L.プリマ　編曲：岩井　直溥</span></div>
+                    </div>
+                </div>
             </div>
-            <!-- 追加したい分だけ program-item をここに複製してください -->
         </div>
     </section>
 
@@ -1019,6 +1096,33 @@
         const journeyToggleAllBtn = document.getElementById('journey-toggle-all');
         const journeyBodies = document.querySelectorAll('#journey-list .part-body');
         setupToggleAllButton(journeyToggleAllBtn, journeyBodies);
+
+        // ===== プログラム：見出し（第1部／第2部／第3部）をタップして個別に開閉 =====
+        const programHeaders = document.querySelectorAll('#program-list .part-header');
+        programHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const body = header.nextElementSibling;
+                if (body) body.classList.toggle('open');
+                header.classList.toggle('open');
+            });
+        });
+
+        // ===== プログラム：一括開く／閉じる =====
+        const programToggleAllBtn = document.getElementById('program-toggle-all');
+        const programBodies = document.querySelectorAll('#program-list .part-body');
+        if (programToggleAllBtn) {
+            let programAllOpen = false;
+            const programIcon = programToggleAllBtn.querySelector('i');
+            const programLabel = programToggleAllBtn.querySelector('.toggle-label');
+            programToggleAllBtn.addEventListener('click', () => {
+                programAllOpen = !programAllOpen;
+                programBodies.forEach(body => body.classList.toggle('open', programAllOpen));
+                programHeaders.forEach(header => header.classList.toggle('open', programAllOpen));
+                programToggleAllBtn.classList.toggle('close-btn-style', programAllOpen);
+                if (programIcon) programIcon.className = programAllOpen ? 'fas fa-circle-chevron-up' : 'fas fa-circle-chevron-down';
+                if (programLabel) programLabel.textContent = programAllOpen ? '閉じる' : '開く';
+            });
+        }
 
         // ===== 顧問の紹介：名前右側の「ご挨拶／閉じる」ボタンで個別に開閉 =====
         document.querySelectorAll('.advisor-toggle-btn').forEach(btn => {
