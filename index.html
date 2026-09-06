@@ -239,12 +239,13 @@
         .program-text .composer { font-size: 0.85em; color: #776b60; }
 
         /* ===== 部員紹介 ===== */
-        .member-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-        .member-card { background: rgba(var(--paper), 0.92); border-radius: 15px; padding: 20px 14px; text-align: center; box-shadow: 0 6px 18px rgba(60,30,20,0.1); border-top: 3px solid var(--primary); }
-        .member-card img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; border: 3px solid var(--sky); box-shadow: 0 3px 8px rgba(60,30,20,0.15); }
-        .member-card .m-name { font-weight: 700; font-size: 1rem; color: var(--azuki); font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; }
-        .member-card .m-part { font-size: 0.85rem; color: var(--primary); margin-bottom: 6px; font-weight: 600; }
-        .member-card .m-comment { font-size: 0.8rem; color: #605850; }
+        .member-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(8px, 2.5vw, 18px); }
+        .member-card { background: rgba(var(--paper), 0.92); border-radius: 15px; padding: clamp(10px, 3.5vw, 20px) clamp(6px, 2.5vw, 14px); text-align: center; box-shadow: 0 6px 18px rgba(60,30,20,0.1); border-top: 3px solid var(--primary); min-width: 0; overflow-wrap: break-word; }
+        .member-card img { width: clamp(48px, 16vw, 80px); height: clamp(48px, 16vw, 80px); border-radius: 50%; object-fit: cover; margin-bottom: 8px; border: 3px solid var(--sky); box-shadow: 0 3px 8px rgba(60,30,20,0.15); }
+        .member-card .m-title { font-weight: 700; font-size: clamp(0.85rem, 3.2vw, 1.25rem); color: var(--azuki); font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; margin-bottom: 4px; }
+        .member-card .m-name { font-weight: 700; font-size: clamp(0.72rem, 2.6vw, 1rem); color: var(--azuki); font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; margin-bottom: 6px; line-height: 1.4; }
+        .member-card .m-part { font-size: clamp(0.62rem, 2.3vw, 0.85rem); color: var(--primary); margin-bottom: 6px; font-weight: 600; line-height: 1.4; }
+        .member-card .m-comment { font-size: clamp(0.6rem, 2.2vw, 0.8rem); color: #605850; line-height: 1.4; }
 
         /* ===== パート紹介（一括開閉） ===== */
         .part-toggle-controls { display: flex; gap: 14px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
@@ -268,8 +269,13 @@
         .part-toggle-btn.close-btn-style { background: linear-gradient(135deg, var(--azuki), var(--azuki-dark)); box-shadow: 0 4px 12px rgba(92,31,40,0.3); }
         .part-toggle-btn.close-btn-style:hover, .part-toggle-btn.close-btn-style:active { box-shadow: 0 6px 18px rgba(92,31,40,0.4); }
 
-        .part-toggle-legend { text-align: center; font-size: 0.85rem; color: var(--azuki); font-weight: 700; margin: -6px 0 20px; letter-spacing: 0.03em; }
+        .part-toggle-legend { text-align: center; font-size: 1.5rem; color: var(--azuki); font-weight: 700; margin: -6px 0 20px; letter-spacing: 0.03em; }
         .part-toggle-legend .m-star { margin-right: 3px; }
+        .part-toggle-legend .m-note { margin-right: 3px; }
+        .part-toggle-legend.legend-pink { color: #d6007f; margin-bottom: 4px; }
+        .part-toggle-legend.legend-blue { color: #1565c0; }
+        .m-note-blue { color: #1565c0; margin-right: 4px; }
+        .m-role-red { color: #e60000; font-weight: 700; }
 
         .part-list { display: flex; flex-direction: column; gap: 14px; }
         .part-card {
@@ -393,7 +399,7 @@
         .greeting-box.advisor-sub { background: rgba(var(--paper), 0.92); }
         .greeting-box + .greeting-box { margin-top: 26px; }
         .greeting-box::before { content: '\201C'; font-size: 5rem; color: var(--sky); position: absolute; top: -6px; left: 18px; opacity: 0.55; font-family: Georgia, serif; }
-        .greeting-text { font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: clamp(0.95rem, 3.8vw, 1.1rem); margin-top: 12px; letter-spacing: 0.01em; }
+        .greeting-text { font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: clamp(0.85rem, 3.5vw, 1.0rem); margin-top: 12px; letter-spacing: 0.01em; }
         .greeting-name { text-align: right; margin-top: 22px; font-weight: 700; color: var(--azuki); font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; }
 
         /* ===== ギャラリー ===== */
@@ -453,7 +459,7 @@
         /* ===== スマホ最適化（横スクロール防止・余白調整） ===== */
         @media (max-width: 480px) {
             section { padding: 38px 16px; }
-            .info-box, .program-list, .greeting-box, .member-card { padding: 20px 16px; }
+            .info-box, .program-list, .greeting-box { padding: 20px 16px; }
             .info-links { flex-direction: column; align-items: stretch; }
             .info-links a { text-align: center; }
         }
@@ -573,7 +579,7 @@
                     </div>
                     <div class="program-item">
                         <div class="program-num">2</div>
-                        <div class="program-text"><span class="piece">2026年全日本吹奏楽コンクール課題曲Ⅲ<br>「あつまれ！おもちゃのマルチャ」</span><br><span class="composer">作曲：伊藤　士恩</span></div>
+                        <div class="program-text"><span class="piece">2026年全日本吹奏楽コンクール課題曲Ⅲ<br>「あつまれ　おもちゃのマルチャ！」</span><br><span class="composer">作曲：伊藤　士恩</span></div>
                     </div>
                     <div class="program-item">
                         <div class="program-num">3</div>
@@ -631,7 +637,7 @@
                     </div>
                     <div class="program-item">
                         <div class="program-num">2</div>
-                        <div class="program-text"><span class="piece">ありがとう<br>〜3年生による〜</span><br><span class="composer">作曲：水野　良樹</span></div>
+                        <div class="program-text"><span class="piece">ありがとう<br>〜3年生による〜</span><br><span class="composer">作曲：水野　良樹　編曲：濱崎　大吾</span></div>
                     </div>
                     <div class="program-item">
                         <div class="program-num">3</div>
@@ -651,16 +657,25 @@
         <div class="member-grid reveal">
             <!-- 部員紹介データをここに展開（下は表示イメージのサンプルです） -->
             <div class="member-card">
-                <img src="member01.png" alt="部員写真">
-                <div class="m-name">部長<br>氏名：谷山 中央</div>
-                <div class="m-part">担当パート：TP</div>
-                <div class="m-comment">皆さん！楽しんでください！！</div>
+                <img src="member01.png" alt="楽器画像">
+                <div class="m-title">部長</div>
+                <div class="m-name">♪氏名♪<br>戊亥 聖美</div>
+                <div class="m-part">【担当パート】<br>トランペット</div>
+                <div class="m-comment">【コメント】<br>　みんなで<br>頑張ります！</div>
             </div>
             <div class="member-card">
-                <img src="member02.png" alt="部員写真">
-                <div class="m-name">副部長<br>氏名：谷山 中央</div>
-                <div class="m-part">担当パート：Asax</div>
-                <div class="m-comment">皆で届ける！私たちの思い！！</div>
+                <img src="member02.png" alt="楽器画像">
+                <div class="m-title">副部長</div>
+                <div class="m-name">♪氏名♪<br>村岡 実音</div>
+                <div class="m-part">【担当パート】<br>サックス</div>
+                <div class="m-comment">【コメント】<br>みなさん<br>楽しんでください！</div>
+            </div>
+            <div class="member-card">
+                <img src="member03.png" alt="楽器画像">
+                <div class="m-title">学生指揮</div>
+                <div class="m-name">♪氏名♪<br>岩切 愛美</div>
+                <div class="m-part">【担当パート】<br>ホルン</div>
+                <div class="m-comment">【コメント】<br>たくさん<br>練習しました！</div>
             </div>
             <!-- 追加したい分だけ member-card をここに複製してください -->
         </div>
@@ -747,15 +762,15 @@
         <div class="part-toggle-controls reveal">
             <button type="button" class="part-toggle-btn" id="parts-toggle-all"><i class="fas fa-circle-chevron-down"></i><span class="toggle-label">開く</span></button>
         </div>
-        <p class="part-toggle-legend reveal"><span class="m-star">★</span>パートリーダー</p>　★</span>楽器のイラストをタップでもOK！</p>
+        <p class="part-toggle-legend reveal legend-pink"><span class="m-note">♪</span>パートリーダー</p>
+        <p class="part-toggle-legend reveal legend-blue"><span class="m-note">♫</span>セクションリーダー</p>★</span>楽器のイラストをタップでも開きます！</p>
         <div class="part-list reveal" id="part-list">
             <div class="part-card">
                 <div class="part-header">
                     <div class="part-name-group">
                         <img src="fl.png" alt="フルート" class="part-icon-img" onerror="this.style.display='none'">
-                        <span class="part-name"><span class="part-emoji">🎵</span>フルート（Fl）</span>
+                        <span class="part-name"><span class="part-emoji">🎼</span>フルート（Fl）</span>
                     </div>
-                    <span class="part-count">3名</span>
                 </div>
                 <div class="part-body">
                     <div class="part-member leader"><span class="m-star">★</span>川井⽥ 珠樹<span class="m-grade">（3年）</span></div>
@@ -767,14 +782,13 @@
                 <div class="part-header">
                     <div class="part-name-group">
                         <img src="cl.png" alt="クラリネット" class="part-icon-img" onerror="this.style.display='none'">
-                        <span class="part-name"><span class="part-emoji">🎵</span>クラリネット（Cl / Bcl）</span>
+                        <span class="part-name"><span class="part-emoji">🎼</span>クラリネット（Cl / Bcl）</span>
                     </div>
-                    <span class="part-count">8名</span>
                 </div>
                 <div class="part-body">
                     <div class="part-member leader"><span class="m-star">★</span>中薗 真陽<span class="m-grade">（3年）</span></div>
+                    <div class="part-member"><span class="m-note-blue">♫</span>永野 美穂<span class="m-grade">（3年）</span></div>
                     <div class="part-member">川原 真保<span class="m-grade">（3年）</span></div>
-                    <div class="part-member">永野 美穂<span class="m-grade">（3年）</span></div>
                     <div class="part-member">尾曲 唯衣<span class="m-grade">（3年）</span></div>
                     <div class="part-member">堂園 ありや<span class="m-grade">（2年）</span></div>
                     <div class="part-member">小野 栞夏<span class="m-grade">（2年）</span></div>
@@ -786,14 +800,13 @@
                 <div class="part-header">
                     <div class="part-name-group">
                         <img src="asax.png" alt="サックス" class="part-icon-img" onerror="this.style.display='none'">
-                        <span class="part-name"><span class="part-emoji">🎵</span>サックス（Asax / Tsax / Bsax）</span>
+                        <span class="part-name"><span class="part-emoji">🎼</span>サックス（Asax / Tsax / Bsax）</span>
                     </div>
-                    <span class="part-count">5名</span>
                 </div>
                 <div class="part-body">
-                    <div class="part-member leader"><span class="m-star">★</span>村岡 実音<span class="m-grade">（3年）</span></div>
+                    <div class="part-member leader"><span class="m-star">★</span>尾嵜 楓<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">村岡 実音<span class="m-grade">（3年）</span><span class="m-role-red">★副部長</span></div>
                     <div class="part-member">窪田 結愛<span class="m-grade">（3年）</span></div>
-                    <div class="part-member">尾嵜 楓<span class="m-grade">（3年）</span></div>
                     <div class="part-member">切手 涼菜<span class="m-grade">（2年）</span></div>
                     <div class="part-member">福永 心音<span class="m-grade">（1年）</span></div>
                 </div>
@@ -802,14 +815,13 @@
                 <div class="part-header">
                     <div class="part-name-group">
                         <img src="tp.png" alt="トランペット" class="part-icon-img" onerror="this.style.display='none'">
-                        <span class="part-name"><span class="part-emoji">🎵</span>トランペット（Tp）</span>
+                        <span class="part-name"><span class="part-emoji">🎼</span>トランペット（Tp）</span>
                     </div>
-                    <span class="part-count">6名</span>
                 </div>
                 <div class="part-body">
                     <div class="part-member leader"><span class="m-star">★</span>柳 優衣<span class="m-grade">（3年）</span></div>
-                    <div class="part-member">戊亥 聖美<span class="m-grade">（3年）</span></div>
-                    <div class="part-member">鶴崎 健吾<span class="m-grade">（3年）</span></div>
+                    <div class="part-member"><span class="m-note-blue">♫</span>鶴崎 健吾<span class="m-grade">（3年）</span></div>
+                    <div class="part-member">戊亥 聖美<span class="m-grade">（3年）</span><span class="m-role-red">★部長</span></div>
                     <div class="part-member">愛甲 翔大<span class="m-grade">（2年）</span></div>
                     <div class="part-member">北村 瑞妃<span class="m-grade">（2年）</span></div>
                     <div class="part-member">竹田 絢音<span class="m-grade">（1年）</span></div>
@@ -819,12 +831,11 @@
                 <div class="part-header">
                     <div class="part-name-group">
                         <img src="hr.png" alt="ホルン" class="part-icon-img" onerror="this.style.display='none'">
-                        <span class="part-name"><span class="part-emoji">🎵</span>ホルン（Hr）</span>
+                        <span class="part-name"><span class="part-emoji">🎼</span>ホルン（Hr）</span>
                     </div>
-                    <span class="part-count">3名</span>
                 </div>
                 <div class="part-body">
-                    <div class="part-member leader"><span class="m-star">★</span>岩切 愛美<span class="m-grade">（3年）</span></div>
+                    <div class="part-member leader"><span class="m-star">★</span>岩切 愛美<span class="m-grade">（3年）</span><span class="m-role-red">★学生指揮</span></div>
                     <div class="part-member">川井田 亜子<span class="m-grade">（1年）</span></div>
                     <div class="part-member">清藤 優奈<span class="m-grade">（1年）</span></div>
                 </div>
@@ -833,9 +844,8 @@
                 <div class="part-header">
                     <div class="part-name-group">
                         <img src="tb.png" alt="トロンボーン" class="part-icon-img" onerror="this.style.display='none'">
-                        <span class="part-name"><span class="part-emoji">🎵</span>トロンボーン（Tb）</span>
+                        <span class="part-name"><span class="part-emoji">🎼</span>トロンボーン（Tb）</span>
                     </div>
-                    <span class="part-count">4名</span>
                 </div>
                 <div class="part-body">
                     <div class="part-member leader"><span class="m-star">★</span>川越 大輝<span class="m-grade">（3年）</span></div>
@@ -848,9 +858,8 @@
                 <div class="part-header">
                     <div class="part-name-group">
                         <img src="euph.png" alt="ユーフォニウム" class="part-icon-img" onerror="this.style.display='none'">
-                        <span class="part-name"><span class="part-emoji">🎵</span>ユーフォニウム（Euph）</span>
+                        <span class="part-name"><span class="part-emoji">🎼</span>ユーフォニウム（Euph）</span>
                     </div>
-                    <span class="part-count">2名</span>
                 </div>
                 <div class="part-body">
                     <div class="part-member leader"><span class="m-star">★</span>日高 瑠南<span class="m-grade">（2年）</span></div>
@@ -861,9 +870,8 @@
                 <div class="part-header">
                     <div class="part-name-group">
                         <img src="tub.png" alt="チューバ" class="part-icon-img" onerror="this.style.display='none'">
-                        <span class="part-name"><span class="part-emoji">🎵</span>チューバ（Tub）</span>
+                        <span class="part-name"><span class="part-emoji">🎼</span>チューバ（Tub）</span>
                     </div>
-                    <span class="part-count">3名</span>
                 </div>
                 <div class="part-body">
                     <div class="part-member leader"><span class="m-star">★</span>竹元 律貴<span class="m-grade">（2年）</span></div>
@@ -875,9 +883,8 @@
                 <div class="part-header">
                     <div class="part-name-group">
                         <img src="per.png" alt="パーカッション" class="part-icon-img" onerror="this.style.display='none'">
-                        <span class="part-name"><span class="part-emoji">🎵</span>パーカッション（Per）</span>
+                        <span class="part-name"><span class="part-emoji">🎼</span>パーカッション（Per）</span>
                     </div>
-                    <span class="part-count">6名</span>
                 </div>
                 <div class="part-body">
                     <div class="part-member leader"><span class="m-star">★</span>益園 結衣<span class="m-grade">（3年）</span></div>
@@ -892,9 +899,8 @@
                 <div class="part-header">
                     <div class="part-name-group">
                         <img src="sbss.png" alt="ストリングベース" class="part-icon-img" onerror="this.style.display='none'">
-                        <span class="part-name"><span class="part-emoji">🎵</span>ストリングベース（Sbsss）</span>
+                        <span class="part-name"><span class="part-emoji">🎼</span>ストリングベース（Sbsss）</span>
                     </div>
-                    <span class="part-count">2名</span>
                 </div>
                 <div class="part-body">
                     <div class="part-member leader"><span class="m-star">★</span>古市 真寛<span class="m-grade">（2年）</span></div>
