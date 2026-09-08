@@ -337,6 +337,40 @@
         #journey-list .part-body { flex-direction: column; align-items: stretch; }
         #journey-list .part-member { width: 100%; }
 
+        /* ===== ウェルカム演奏（プログラム「開く」ボタン直下の案内バッジ） ===== */
+        .welcome-performance {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            max-width: 420px;
+            margin: 16px auto 0;
+            padding: 14px 22px;
+            background: rgba(var(--paper), 0.92);
+            border-radius: 16px;
+            border-top: 3px solid var(--azuki);
+            box-shadow: 0 6px 18px rgba(60,30,20,0.10);
+            text-align: center;
+        }
+        .welcome-performance .wp-icon { font-size: clamp(1.2rem, 4vw, 1.5rem); flex-shrink: 0; }
+        .welcome-performance .wp-text { line-height: 1.5; }
+        .welcome-performance .wp-main {
+            display: block;
+            font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+            font-weight: 700;
+            color: var(--azuki);
+            font-size: clamp(0.95rem, 3.6vw, 1.12rem);
+            letter-spacing: 0.06em;
+        }
+        .welcome-performance .wp-sub {
+            display: block;
+            margin-top: 3px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: clamp(0.85rem, 3.2vw, 0.98rem);
+            letter-spacing: 0.03em;
+        }
+
         /* ===== プログラム（アコーディオン化：見出し部分をタップして開閉） ===== */
         #program-list .part-body { flex-direction: column; align-items: stretch; }
         #program-list .part-body.open { max-height: 1200px; }
@@ -392,6 +426,18 @@
             transition: max-height 0.45s ease, margin-top 0.45s ease, padding-top 0.45s ease;
         }
         .advisor-greeting-body.open { max-height: 900px; margin-top: 16px; padding-top: 16px; border-top-width: 1px; }
+
+        /* ===== 顧問の紹介（1つのボックスにまとめた表示） ===== */
+        .advisor-merged {
+            display: flex;
+            flex-direction: column;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+        .advisor-person { display: flex; align-items: baseline; gap: 14px; padding: 12px 2px; }
+        .advisor-person .a-role { font-size: 0.85rem; font-weight: 700; color: var(--primary); letter-spacing: 0.04em; flex-shrink: 0; width: 4.5em; }
+        .advisor-person .a-name { font-size: 1.08rem; font-weight: 700; color: var(--azuki); font-family: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif; }
+        .advisor-divider { height: 1px; background: rgba(124,44,57,0.2); margin: 0 2px; }
 
         /* ===== 顧問挨拶 ===== */
         .greeting-box { background: rgba(var(--paper), 0.92); border-radius: 16px; padding: clamp(26px, 6vw, 42px); position: relative; box-shadow: 0 6px 20px rgba(60,30,20,0.1); border-top: 3px solid var(--azuki); }
@@ -524,10 +570,9 @@
         <ul>
             <li><a href="#info">定期演奏会の情報</a></li>
             <li><a href="#program">プログラム</a></li>
-            <li><a href="#members">部員紹介</a></li>
             <li><a href="#advisors">顧問紹介</a></li>
             <li><a href="#parts">パート紹介</a></li>
-            <li><a href="#journey">一年の軌跡</a></li>
+            <li><a href="#journey">一年の活動</a></li>
             <li><a href="#gallery">写真ギャラリー</a></li>
             <li><a href="#g1">写真1-9</a></li>
             <li><a href="#g10">写真10-19</a></li>
@@ -560,6 +605,13 @@
         </h2>
         <div class="part-toggle-controls reveal">
             <button type="button" class="part-toggle-btn" id="program-toggle-all"><i class="fas fa-circle-chevron-down"></i><span class="toggle-label">開く</span></button>
+        </div>
+        <div class="welcome-performance reveal">
+            <span class="wp-icon">🥁</span>
+            <span class="wp-text">
+                <span class="wp-main">〜ウェルカム演奏〜</span>
+                <span class="wp-sub">打楽器アンサンブル</span>
+            </span>
         </div>
         <div class="part-list reveal" id="program-list">
             <div class="part-card">
@@ -600,11 +652,11 @@
                 <div class="part-body">
                     <div class="program-item">
                         <div class="program-num">1</div>
-                        <div class="program-text"><span class="piece">アンサンブル</span><br><span class="composer">未定</span></div>
+                        <div class="program-text"><span class="piece">フルート3重奏<br>映画「アラジン」より "ホール・ニュー・ワールド</span><br><span class="composer">作曲：A.メンケン　編曲：宇津木　芳夫“</span></div>
                     </div>
                     <div class="program-item">
                         <div class="program-num">2</div>
-                        <div class="program-text"><span class="piece">アンサンブル</span><br><span class="composer">未定</span></div>
+                        <div class="program-text"><span class="piece">金管6重奏<br>Gargoyle</span><br><span class="composer">作曲：広瀬　勇人</span></div>
                     </div>
                     <div class="program-item">
                         <div class="program-num">3</div>
@@ -616,7 +668,7 @@
                     </div>
                     <div class="program-item">
                         <div class="program-num">5</div>
-                        <div class="program-text"><span class="piece">J-BEST'25<br>〜2025年J-POPベストヒッツスペシャルメドレー〜</span><br><span class="composer">編曲：宮川　成治</span></div>
+                        <div class="program-text"><span class="piece">SING SING SING</span><br><span class="composer">作曲：L.プリマ</span></div>
                     </div>
                 </div>
             </div>
@@ -641,43 +693,10 @@
                     </div>
                     <div class="program-item">
                         <div class="program-num">3</div>
-                        <div class="program-text"><span class="piece">SING SING SING</span><br><span class="composer">作曲：L.プリマ　編曲：岩井　直溥</span></div>
+                        <div class="program-text"><span class="piece">J-BEST'25<br>〜2025年J-POPベストヒッツスペシャルメドレー〜</span><br><span class="composer">編曲：宮川　成治</span></div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- ===== 部員紹介 ===== -->
-  <section id="members">
-        <h2 class="section-title heading-modern heading-program heading-reveal">
-            <span class="heading-jp"><i class="fas fa-list-ol"></i><span class="accent-char">部</span>員挨拶</span>
-            <span class="heading-en">Club Member Introduction</span>
-        </h2>
-        <div class="member-grid reveal">
-            <!-- 部員紹介データをここに展開（下は表示イメージのサンプルです） -->
-            <div class="member-card">
-                <img src="member01.png" alt="楽器画像">
-                <div class="m-title">部長</div>
-                <div class="m-name">♪氏名♪<br>戊亥 聖美</div>
-                <div class="m-part">【担当パート】<br>トランペット</div>
-                <div class="m-comment">【コメント】<br>　みんなで<br>頑張ります！</div>
-            </div>
-            <div class="member-card">
-                <img src="member02.png" alt="楽器画像">
-                <div class="m-title">副部長</div>
-                <div class="m-name">♪氏名♪<br>村岡 実音</div>
-                <div class="m-part">【担当パート】<br>サックス</div>
-                <div class="m-comment">【コメント】<br>みなさん<br>楽しんでください！</div>
-            </div>
-            <div class="member-card">
-                <img src="member03.png" alt="楽器画像">
-                <div class="m-title">学生指揮</div>
-                <div class="m-name">♪氏名♪<br>岩切 愛美</div>
-                <div class="m-part">【担当パート】<br>ホルン</div>
-                <div class="m-comment">【コメント】<br>たくさん<br>練習しました！</div>
-            </div>
-            <!-- 追加したい分だけ member-card をここに複製してください -->
         </div>
     </section>
 
@@ -689,64 +708,20 @@
         </h2>
         <div class="advisor-layout reveal">
             <div class="advisor-row">
-                <div class="advisor-card advisor-head">
-                    <div class="advisor-header">
-                        <div class="advisor-info">
-                            <div class="a-role">顧問</div>
-                            <div class="a-name">島崎 英子 先生</div>
-                        </div>
-                        <button type="button" class="advisor-toggle-btn" data-target="advisor-greet-1"><i class="fas fa-circle-chevron-down"></i><span class="toggle-label">ご挨拶</span></button>
+                <div class="advisor-card advisor-merged">
+                    <div class="advisor-person">
+                        <div class="a-role">顧問</div>
+                        <div class="a-name">島崎 英子 先生</div>
                     </div>
-                    <div class="advisor-greeting-body" id="advisor-greet-1">
-                        <p class="greeting-text">皆さま、本日は谷山中学校吹奏楽部の定期演奏会にお越しいただき、ありがとうございます。<br>
-顧問の島崎英子です。<br>
-<br>
-今朝、生徒から「先生、今日は指揮棒だけは絶対忘れないでね！」と念押しされました。<br>
-……心配される先生でいいのでしょうか。<br>
-でも、ちゃんと持ってきていますのでご安心ください。<br>
-<br>
-吹奏楽は、音だけでなく“仲間の優しさ”が響く世界です。<br>
-<br>
-どうぞ最後まで、温かくお楽しみください。</p>
-                        <div class="greeting-name">顧問　島崎 英子</div>
+                    <div class="advisor-divider"></div>
+                    <div class="advisor-person">
+                        <div class="a-role">副顧問</div>
+                        <div class="a-name">宮之原 せつみ 先生</div>
                     </div>
-                </div>
-            </div>
-            <div class="advisor-row">
-                <div class="advisor-card advisor-sub">
-                    <div class="advisor-header">
-                        <div class="advisor-info">
-                            <div class="a-role">副顧問</div>
-                            <div class="a-name">宮之原 せつみ 先生</div>
-                        </div>
-                        <button type="button" class="advisor-toggle-btn" data-target="advisor-greet-2"><i class="fas fa-circle-chevron-down"></i><span class="toggle-label">ご挨拶</span></button>
-                    </div>
-                    <div class="advisor-greeting-body" id="advisor-greet-2">
-                        <p class="greeting-text">副顧問の宮之原せつみです。<br>
-<br>
-毎日の練習で聞こえてくる音は、少しずつですが確実に重なり合って、今日のこの舞台につながっています。<br>
-<br>
-どうか温かい拍手で見守っていただけたら嬉しいです。</p>
-                        <div class="greeting-name">副顧問　宮之原 せつみ</div>
-                    </div>
-                </div>
-            </div>
-            <div class="advisor-row">
-                <div class="advisor-card advisor-sub">
-                    <div class="advisor-header">
-                        <div class="advisor-info">
-                            <div class="a-role">副顧問</div>
-                            <div class="a-name">二川 加奈美 先生</div>
-                        </div>
-                        <button type="button" class="advisor-toggle-btn" data-target="advisor-greet-3"><i class="fas fa-circle-chevron-down"></i><span class="toggle-label">ご挨拶</span></button>
-                    </div>
-                    <div class="advisor-greeting-body" id="advisor-greet-3">
-                        <p class="greeting-text">副顧問の二川加奈美です。<br>
-<br>
-微笑ましい毎日を経て、生徒たちは今日という日を迎えました。<br>
-<br>
-最後まで、どうぞごゆっくりお楽しみください。</p>
-                        <div class="greeting-name">副顧問　二川加奈美</div>
+                    <div class="advisor-divider"></div>
+                    <div class="advisor-person">
+                        <div class="a-role">副顧問</div>
+                        <div class="a-name">二川 加奈美 先生</div>
                     </div>
                 </div>
             </div>
