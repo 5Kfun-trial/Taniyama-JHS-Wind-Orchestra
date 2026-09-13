@@ -457,8 +457,38 @@
 
         #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,10,14,0.92); display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
         #lightbox-container { position: relative; display: flex; flex-direction: column; align-items: center; max-width: 100%; max-height: 100%; }
-        .lb-image-wrap { width: 90vw; max-width: 700px; height: 55vh; max-height: 560px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; z-index: 1; }
+        .lb-image-wrap { width: 90vw; max-width: 700px; height: 55vh; max-height: 560px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; z-index: 1; perspective: 1800px; }
         #lightbox-img { max-width: 100%; max-height: 100%; object-fit: contain; border: 3px solid var(--white); border-radius: 6px; transition: transform 0.4s ease; image-orientation: none; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+        /* ===== ページめくり演出用のオーバーレイ（現在の写真の“めくれるページ”役。実際の#lightbox-imgの拡大・縮小・回転・ドラッグ操作には一切影響しない） ===== */
+        .lb-flip-page {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            pointer-events: none;
+            z-index: 5;
+        }
+        .lb-flip-page img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border: 3px solid var(--white);
+            border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backface-visibility: hidden;
+            display: block;
+        }
+        .lb-flip-shade {
+            position: absolute;
+            inset: 0;
+            border-radius: 6px;
+            opacity: 0;
+            pointer-events: none;
+        }
         .lb-caption { color: var(--white); margin-top: 20px; text-align: center; line-height: 1.5; font-size: 1.05rem; font-weight: 700; position: relative; z-index: 10; }
 
         /* ===== ライトボックス：前後の写真へ移動する矢印（画像の下・コメントの直上） ===== */
@@ -945,6 +975,10 @@
             </div>
             <div class="lb-image-wrap">
                 <img id="lightbox-img" src="">
+                <div class="lb-flip-page" id="lb-flip-page">
+                    <img id="lb-flip-page-img" src="">
+                    <div class="lb-flip-shade" id="lb-flip-shade"></div>
+                </div>
             </div>
             <div class="lb-nav" id="lb-nav">
                 <div class="lb-nav-btn" id="lb-prev" title="前の写真">&laquo;</div>
@@ -1177,6 +1211,9 @@
         // ===== ライトボックス =====
         const lightbox = document.getElementById('lightbox');
         const lbImg = document.getElementById('lightbox-img');
+        const lbFlipPage = document.getElementById('lb-flip-page');
+        const lbFlipPageImg = document.getElementById('lb-flip-page-img');
+        const lbFlipShade = document.getElementById('lb-flip-shade');
         const lbCaption = document.getElementById('lb-caption');
         const closeBtn = document.getElementById('close-btn');
 
@@ -1232,6 +1269,52 @@
             updateNavButtons();
         }
 
+        // ▼ 本のページをめくるような動きで、次/前の写真に切り替える演出
+        // 仕組み：現在の写真をそっくり複製したオーバーレイ（lb-flip-page）を上に重ねて表示し、
+        // その裏で本物の#lightbox-imgは即座に次の写真へ差し替える（隠れているので見た目には変化なし）。
+        // オーバーレイだけが「ページ」として、次へ進む時は左端を軸に、前へ戻る時は右端を軸にして
+        // 3D回転しながらめくれていき、めくれ終わると下から本物の新しい写真が現れる。
+        // 拡大・縮小・回転・ドラッグ等、#lightbox-img自体の操作には一切手を加えていない。
+        let isFlipping = false;
+        function flipToPhoto(index, direction) {
+            if (isFlipping) return;
+            isFlipping = true;
+
+            const hinge = direction === 'next' ? 'left' : 'right';
+            const angleTo = direction === 'next' ? -170 : 170;
+
+            // オーバーレイに「めくれる前」の写真（今表示中の写真）を複製
+            lbFlipPageImg.src = lbImg.src;
+            lbFlipPage.style.transformOrigin = hinge + ' center';
+            lbFlipPage.style.transition = 'none';
+            lbFlipPage.style.transform = 'rotateY(0deg)';
+            lbFlipShade.style.transition = 'none';
+            lbFlipShade.style.opacity = '0';
+            lbFlipShade.style.background = direction === 'next'
+                ? 'linear-gradient(90deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.45) 100%)'
+                : 'linear-gradient(270deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.45) 100%)';
+            lbFlipPage.style.display = 'flex';
+
+            // 本物の画像は、オーバーレイに隠れているうちに次の写真へ差し替えておく
+            openLightboxAt(index);
+
+            // 強制リフローしてから、めくれるアニメーションを開始
+            void lbFlipPage.offsetWidth;
+            requestAnimationFrame(() => {
+                lbFlipPage.style.transition = 'transform 1.0s cubic-bezier(0.5, 0, 0.35, 1)';
+                lbFlipShade.style.transition = 'opacity 1.0s ease';
+                lbFlipPage.style.transform = `rotateY(${angleTo}deg)`;
+                lbFlipShade.style.opacity = '1';
+            });
+
+            lbFlipPage.addEventListener('transitionend', function onEnd(e) {
+                if (e.propertyName !== 'transform') return;
+                lbFlipPage.removeEventListener('transitionend', onEnd);
+                lbFlipPage.style.display = 'none';
+                isFlipping = false;
+            }, { once: true });
+        }
+
         // 現在位置から前(-1)または後(1)方向に、実在する（読み込みに成功した）最も近い写真のインデックスを探す
         function findAdjacentIndex(fromIndex, direction) {
             let idx = fromIndex + direction;
@@ -1282,12 +1365,12 @@
 
         lbPrevBtn.addEventListener('click', () => {
             const idx = findAdjacentIndex(currentIndex, -1);
-            if (idx !== -1) openLightboxAt(idx);
+            if (idx !== -1) flipToPhoto(idx, 'prev');
         });
 
         lbNextBtn.addEventListener('click', () => {
             const idx = findAdjacentIndex(currentIndex, 1);
-            if (idx !== -1) openLightboxAt(idx);
+            if (idx !== -1) flipToPhoto(idx, 'next');
         });
 
         lbZoomInBtn.addEventListener('click', () => {
